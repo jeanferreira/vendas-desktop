@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,6 +27,9 @@ import javax.swing.JTable;
 
 import projeto.vendas.dao.CustomerDAO;
 import projeto.vendas.model.Customer;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class JFCustomer extends JFrame {
 	
@@ -61,8 +66,8 @@ public class JFCustomer extends JFrame {
 	private JTextField jTNomeMae;
 	private JButton jBPesquisar;
 	private JTextField jTPesquisar;
-	private JTable jTableCliente;
 	private JScrollPane jScrollPaneListarCliente;
+	private JTable jTableCliente;
 
 	/**
 	 * Launch the application.
@@ -173,6 +178,16 @@ public class JFCustomer extends JFrame {
 		jPListar.setLayout(null);
 		
 		jBPesquisar = new JButton("Pesquisar");
+		jBPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					pesquisarCliente();
+				} catch (SQLException ex) {
+					Logger.getLogger(JFLogin.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+		            JOptionPane.showMessageDialog(null, ex);
+				}
+			}
+		});
 		jBPesquisar.setIcon(new ImageIcon(JFCustomer.class.getResource("/projeto/vendas/images/1999_16x16.png")));
 		jBPesquisar.setBounds(524, 11, 105, 23);
 		jPListar.add(jBPesquisar);
@@ -182,11 +197,13 @@ public class JFCustomer extends JFrame {
 		jPListar.add(jTPesquisar);
 		jTPesquisar.setColumns(10);
 		
+		jScrollPaneListarCliente = new JScrollPane();
+		jScrollPaneListarCliente.setBounds(10, 43, 619, 381);
+		jPListar.add(jScrollPaneListarCliente);
+		
 		jTableCliente = new JTable();
-		jTableCliente.setBounds(10, 45, 619, 379);
-		jPListar.add(jTableCliente);
 		jTableCliente.setModel(tmCliente);
-		//jScrollPaneListarCliente.setViewportView(jTableCliente);
+		jScrollPaneListarCliente.setViewportView(jTableCliente);
 		
 
 		setLocationRelativeTo(null);
