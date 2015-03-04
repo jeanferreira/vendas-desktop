@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.JPasswordField;
 
 import projeto.vendas.dao.UserDAO;
+import javax.swing.ImageIcon;
 
 public class JFLogin extends JFrame {
 
@@ -114,6 +115,7 @@ public class JFLogin extends JFrame {
 		jPDados.add(JPassSenha);
 
 		jBEntrar = new JButton("Entrar");
+		jBEntrar.setIcon(new ImageIcon(JFLogin.class.getResource("/projeto/vendas/images/icone_login.png")));
 		
 	}
 

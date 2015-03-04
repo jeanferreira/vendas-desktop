@@ -9,9 +9,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.border.EtchedBorder;
 import javax.swing.ImageIcon;
-import java.awt.Dimension;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JFHome extends JFrame {
 
@@ -20,6 +27,7 @@ public class JFHome extends JFrame {
 	 */
 	private static final long serialVersionUID = -2285480087524685085L;
 	private JPanel jPHome;
+	private JFCustomer jfcustomer;
 
 	/**
 	 * Launch the application.
@@ -42,7 +50,7 @@ public class JFHome extends JFrame {
 	 */
 	public JFHome() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 799, 615);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -61,6 +69,21 @@ public class JFHome extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmCliente = new JMenuItem("Cliente");
+		mntmCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+		            if (jfcustomer == null) {
+		                jfcustomer = new JFCustomer();
+		                jfcustomer.show();
+		            } else {
+		                jfcustomer.setVisible(true);
+		            }
+		        } catch (SQLException | ParseException ex) {
+		            Logger.getLogger(JFHome.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+		            JOptionPane.showMessageDialog(null, ex);
+		        }				
+			}
+		});
 		mntmCliente.setIcon(new ImageIcon(JFHome.class.getResource("/projeto/vendas/images/iconeCliente25X25.png")));
 		mnNewMenu_1.add(mntmCliente);
 		
