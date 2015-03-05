@@ -36,6 +36,14 @@ public class JFLogin extends JFrame {
 	private JButton jBEntrar;
 	private final UserDAO usDAO;
 	private JFHome jfhome;
+	private static JFLogin jflogin;
+	
+	public static JFLogin getInstance() throws SQLException {
+		if (jflogin == null) {
+			jflogin = new JFLogin();
+		}
+		return jflogin;
+	}
 
 	/**
 	 * Launch the application.
@@ -139,7 +147,15 @@ public class JFLogin extends JFrame {
 				jfhome.setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(null, "Usuário não cadastrado");
+				limpaDados();
 			}
 		}
 	}
+	
+	public void limpaDados() {
+		jTUsuario.setText("");
+		JPassSenha.setText("");
+	}
+	
+	
 }
