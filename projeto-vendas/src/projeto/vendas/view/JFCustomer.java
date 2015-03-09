@@ -1,15 +1,5 @@
 package projeto.vendas.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.border.TitledBorder;
@@ -39,8 +29,31 @@ import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import projeto.vendas.dao.CustomerDAO;
+import projeto.vendas.model.Customer;
+
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 public class JFCustomer extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2393976050363117949L;
+	private JPanel jPContentCustomer;
 	private final CustomerDAO controlCus;
 	List<Customer> lsCliente;
 	Customer customer;
@@ -53,20 +66,18 @@ public class JFCustomer extends JFrame {
 		}
 	};
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1168767098000571102L;
-	private JPanel jPContentCustomer;
 	private JPanel jPCliente;
 	private JPanel jPListar;
 	private JTabbedPane tabbedPaneCliente;
+	private JScrollPane jScrollPaneListarCliente;
+	private JTable jTableCliente;
+	private JTextField jTPesquisar;
+	private JButton jBPesquisar;
 	private JPanel jPBotoes;
 	private JButton jBNovo;
-	private JButton jbSalvar;
+	private JButton jBSalvar;
+	private JPanel jPDados;
 	private JButton jBLimpar;
-	private JPanel jPDadosCliente;
-	private JLabel jLCpf;
 	private JFormattedTextField jFormattedCpf;
 	private JLabel jLNomeCliente;
 	private JTextField jTNomeCliente;
@@ -74,32 +85,29 @@ public class JFCustomer extends JFrame {
 	private JTextField jTRg;
 	private JLabel jLNomeMae;
 	private JTextField jTNomeMae;
-	private JButton jBPesquisar;
-	private JTextField jTPesquisar;
-	private JScrollPane jScrollPaneListarCliente;
-	private JTable jTableCliente;
-	private JTextField jTNomePai;
-	private JTextField jTEmail;
 	private JLabel jLDataNasc;
 	private JFormattedTextField jFormattedDataNasc;
-	private JLabel jLSexo;
-	private JComboBox jCSexo;
-	private JLabel jLEstadoCivil;
 	private JLabel jLNomePai;
-	private JComboBox jCEstadoCivil;
+	private JTextField jTNomePai;
+	private JComboBox jCBEstadoCivil;
 	private JLabel jLEmail;
-	private JLabel jLCep;
-	private JFormattedTextField jFormattedCep;
-	private JLabel jLEndereco;
+	private JTextField jTEmail;
 	private JTextField jTEndereco;
-	private JLabel jLEstado;
-	private JComboBox jCEstado;
-	private JLabel jLCidade;
-	private JComboBox jCCidade;
-	private JLabel jLTelefone;
 	private JTextField jTTelefone;
-	private JLabel jLBairro;
 	private JTextField jTBairro;
+	private JComboBox jCBSexo;
+	private JLabel jLEstadoCivil;
+	private JLabel jLSexo;
+	private JLabel jLCpf;
+	private JFormattedTextField jFormattedCep;
+	private JComboBox jCBEstado;
+	private JLabel jLCidade;
+	private JLabel jLCep;
+	private JComboBox jCBCidade;
+	private JLabel jLEstado;
+	private JLabel jLBairro;
+	private JLabel jLEndereco;
+	private JLabel jLTelefone;
 
 	/**
 	 * Launch the application.
@@ -120,70 +128,286 @@ public class JFCustomer extends JFrame {
 	/**
 	 * Create the frame.
 	 * 
-	 * @throws ParseException
 	 * @throws SQLException
+	 * @throws ParseException
 	 */
-	public JFCustomer() throws ParseException, SQLException {
+	public JFCustomer() throws SQLException, ParseException {
 		initComponents();
 		desabilitaDados();
 		this.controlCus = new CustomerDAO();
+		this.customer = new Customer();
 		carregaJCEstado();
 	}
 
 	private void initComponents() throws ParseException {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 471);
-		jPContentCustomer = new JPanel();
-		jPContentCustomer.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(jPContentCustomer);
-		jPContentCustomer.setLayout(new BorderLayout(0, 0));
+		jPContentCustomer = new javax.swing.JPanel();
+		tabbedPaneCliente = new javax.swing.JTabbedPane();
+		jPCliente = new javax.swing.JPanel();
+		jPListar = new javax.swing.JPanel();
+		jScrollPaneListarCliente = new javax.swing.JScrollPane();
+		jTableCliente = new javax.swing.JTable();
 
-		tabbedPaneCliente = new JTabbedPane(JTabbedPane.LEFT);
-		jPContentCustomer.add(tabbedPaneCliente, BorderLayout.CENTER);
-
-		jPCliente = new JPanel();
-		tabbedPaneCliente.addTab("Novo Cliente", null, jPCliente, null);
-		jPCliente.setLayout(null);
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		jPBotoes = new JPanel();
 		jPBotoes.setBorder(new TitledBorder(null, "Bot\u00F5es",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		jPBotoes.setBounds(10, 11, 671, 92);
-		jPCliente.add(jPBotoes);
-		jPBotoes.setLayout(null);
+
+		jPDados = new JPanel();
+		jPDados.setBorder(new TitledBorder(null, "Dados", TitledBorder.LEADING,
+				TitledBorder.TOP, null, null));
+
+		javax.swing.GroupLayout jPClienteLayout = new javax.swing.GroupLayout(
+				jPCliente);
+		jPClienteLayout
+				.setHorizontalGroup(jPClienteLayout
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								jPClienteLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												jPClienteLayout
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addComponent(
+																jPDados,
+																Alignment.LEADING,
+																GroupLayout.DEFAULT_SIZE,
+																895,
+																Short.MAX_VALUE)
+														.addComponent(
+																jPBotoes,
+																Alignment.LEADING,
+																GroupLayout.DEFAULT_SIZE,
+																895,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		jPClienteLayout.setVerticalGroup(jPClienteLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				jPClienteLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jPBotoes, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addComponent(jPDados, GroupLayout.DEFAULT_SIZE, 297,
+								Short.MAX_VALUE).addContainerGap()));
+
+		jLCpf = new JLabel("Cpf:");
+
+		jFormattedCpf = new JFormattedTextField();
+		jFormattedCpf
+				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
+						new javax.swing.text.MaskFormatter("###.###.###-##")));
+
+		jLNomeCliente = new JLabel("Nome Cliente:");
+
+		jTNomeCliente = new JTextField();
+		jTNomeCliente.setColumns(10);
+
+		jLRg = new JLabel("RG:");
+
+		jTRg = new JTextField();
+		jTRg.setColumns(10);
+
+		jLNomeMae = new JLabel("Nome M\u00E3e:");
+
+		jTNomeMae = new JTextField();
+		jTNomeMae.setColumns(10);
+
+		jLDataNasc = new JLabel("Data Nasc:");
+
+		jFormattedDataNasc = new JFormattedTextField();
+		jFormattedDataNasc
+				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
+						new javax.swing.text.MaskFormatter("##/##/####")));
+
+		jLNomePai = new JLabel("Nome Pai:");
+
+		jTNomePai = new JTextField();
+		jTNomePai.setColumns(10);
+
+		jLSexo = new JLabel("Sexo:");
+
+		jCBSexo = new JComboBox();
+		jCBSexo.setModel(new DefaultComboBoxModel(new String[] { "",
+				"MASCULINO", "FEMININO" }));
+
+		jLEstadoCivil = new JLabel("Estado Civil:");
+
+		jCBEstadoCivil = new JComboBox();
+		jCBEstadoCivil
+				.setModel(new DefaultComboBoxModel(new String[] { "",
+						"SOLTEIRO", "CASADO", "SEPARADO", "DIVORCIADO",
+						"VI\u00DAVO" }));
+
+		jLEmail = new JLabel("Email:");
+
+		jTEmail = new JTextField();
+		jTEmail.setColumns(10);
+
+		jFormattedCep = new JFormattedTextField();
+		jFormattedCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###-###")));
+
+		jLCep = new JLabel("CEP:");
+
+		jTEndereco = new JTextField();
+		jTEndereco.setColumns(10);
+
+		jLEstado = new JLabel("Estado:");
+
+		jCBEstado = new JComboBox();
+
+		jLCidade = new JLabel("Cidade:");
+
+		jCBCidade = new JComboBox();
+
+		jLEstado = new JLabel("Estado:");
+
+		jTTelefone = new JTextField();
+		jTTelefone.setColumns(10);
+
+		jLBairro = new JLabel("Bairro:");
+
+		jTBairro = new JTextField();
+		jTBairro.setColumns(10);
+		
+		jLEndereco = new JLabel("Endere\u00E7o:");
+		
+		jLTelefone = new JLabel("Telefone:");
+
+		GroupLayout gl_jPDados = new GroupLayout(jPDados);
+		gl_jPDados.setHorizontalGroup(
+			gl_jPDados.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jPDados.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(gl_jPDados.createSequentialGroup()
+								.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
+									.addComponent(jLCpf)
+									.addComponent(jLRg))
+								.addGap(40)
+								.addGroup(gl_jPDados.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(jFormattedCpf)
+									.addComponent(jTRg, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
+							.addGroup(gl_jPDados.createSequentialGroup()
+								.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
+									.addComponent(jLDataNasc)
+									.addComponent(jLSexo)
+									.addComponent(jLTelefone))
+								.addGap(8)
+								.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
+									.addComponent(jCBSexo, 0, 140, Short.MAX_VALUE)
+									.addComponent(jFormattedDataNasc)
+									.addComponent(jFormattedCep, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+									.addComponent(jCBEstado, 0, 140, Short.MAX_VALUE)
+									.addComponent(jTTelefone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))))
+						.addComponent(jLCep)
+						.addComponent(jLEstado))
+					.addGap(18)
+					.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
+						.addComponent(jLNomeCliente)
+						.addComponent(jLNomeMae)
+						.addComponent(jLNomePai)
+						.addComponent(jLEstadoCivil)
+						.addComponent(jLCidade)
+						.addComponent(jLBairro)
+						.addComponent(jLEndereco))
+					.addGap(18)
+					.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
+						.addComponent(jTNomeMae, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+						.addComponent(jTNomeCliente, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+						.addComponent(jTNomePai, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+						.addGroup(gl_jPDados.createSequentialGroup()
+							.addComponent(jCBEstadoCivil, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(jLEmail)
+							.addGap(18)
+							.addComponent(jTEmail, GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE))
+						.addComponent(jTEndereco, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+						.addComponent(jCBCidade, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jTBairro, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_jPDados.setVerticalGroup(
+			gl_jPDados.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jPDados.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jLCpf)
+						.addComponent(jFormattedCpf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLNomeCliente)
+						.addComponent(jTNomeCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jLRg)
+						.addComponent(jTRg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLNomeMae)
+						.addComponent(jTNomeMae, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jFormattedDataNasc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLDataNasc)
+						.addComponent(jLNomePai)
+						.addComponent(jTNomePai, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jLSexo)
+						.addComponent(jCBSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLEstadoCivil)
+						.addComponent(jCBEstadoCivil, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLEmail)
+						.addComponent(jTEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jFormattedCep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLCep)
+						.addComponent(jTEndereco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLEndereco))
+					.addGap(18)
+					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jLEstado)
+						.addComponent(jCBEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLCidade)
+						.addComponent(jCBCidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jLEstado)
+						.addComponent(jTTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLBairro)
+						.addComponent(jTBairro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLTelefone))
+					.addContainerGap(15, Short.MAX_VALUE))
+		);
+		jPDados.setLayout(gl_jPDados);
 
 		jBNovo = new JButton("Novo");
 		jBNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					habilitaDados();
+				habilitaDados();
 			}
 		});
 		jBNovo.setIcon(new ImageIcon(JFCustomer.class
 				.getResource("/projeto/vendas/images/novo.png")));
-		jBNovo.setBounds(10, 23, 106, 40);
-		jPBotoes.add(jBNovo);
 
-		jbSalvar = new JButton("Salvar");
-		jbSalvar.addActionListener(new ActionListener() {
+		jBSalvar = new JButton("Salvar");
+		jBSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (verificaDados()) {
-						salvarCliente();
-						limparDados();
-						desabilitaDados();
-					}
-					
-				} catch (SQLException | ParseException e1) {
-					Logger.getLogger(JFCustomer.class.getName()).log(
-							Level.SEVERE, null, e1.getMessage());
-					JOptionPane.showMessageDialog(null, e1);
+					salvarCliente();
+					limparDados();
+					desabilitaDados();
+				} catch (SQLException | ParseException ex) {
+					Logger.getLogger(JFCustomer.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+		            JOptionPane.showMessageDialog(null, ex);
 				}
 			}
 		});
-		jbSalvar.setIcon(new ImageIcon(JFCustomer.class
+		jBSalvar.setIcon(new ImageIcon(JFCustomer.class
 				.getResource("/projeto/vendas/images/1428_32x32.png")));
-		jbSalvar.setBounds(126, 23, 106, 40);
-		jPBotoes.add(jbSalvar);
 
 		jBLimpar = new JButton("Limpar");
 		jBLimpar.addActionListener(new ActionListener() {
@@ -193,161 +417,57 @@ public class JFCustomer extends JFrame {
 		});
 		jBLimpar.setIcon(new ImageIcon(JFCustomer.class
 				.getResource("/projeto/vendas/images/Eraser-32.png")));
-		jBLimpar.setBounds(555, 23, 106, 40);
-		jPBotoes.add(jBLimpar);
 
-		jPDadosCliente = new JPanel();
-		jPDadosCliente.setBorder(new TitledBorder(null, "Dados",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		jPDadosCliente.setBounds(10, 114, 671, 292);
-		jPCliente.add(jPDadosCliente);
-		jPDadosCliente.setLayout(null);
+		GroupLayout gl_jPBotoes = new GroupLayout(jPBotoes);
+		gl_jPBotoes.setHorizontalGroup(gl_jPBotoes.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gl_jPBotoes
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jBNovo)
+						.addGap(18)
+						.addComponent(jBSalvar)
+						.addPreferredGap(ComponentPlacement.RELATED, 570,
+								Short.MAX_VALUE).addComponent(jBLimpar)
+						.addContainerGap()));
+		gl_jPBotoes
+				.setVerticalGroup(gl_jPBotoes
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_jPBotoes
+										.createSequentialGroup()
+										.addGroup(
+												gl_jPBotoes
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																jBSalvar,
+																GroupLayout.PREFERRED_SIZE,
+																39,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jBNovo,
+																GroupLayout.DEFAULT_SIZE,
+																38,
+																Short.MAX_VALUE)
+														.addComponent(jBLimpar))
+										.addContainerGap(
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
+		jPBotoes.setLayout(gl_jPBotoes);
+		jPCliente.setLayout(jPClienteLayout);
 
-		jLCpf = new JLabel("CPF:");
-		jLCpf.setBounds(10, 32, 28, 14);
-		jPDadosCliente.add(jLCpf);
+		tabbedPaneCliente.addTab("Novo Cliente", jPCliente);
 
-		jFormattedCpf = new JFormattedTextField();
-		jFormattedCpf.setFormatterFactory(new DefaultFormatterFactory(
-				new MaskFormatter("###.###.###-##")));
-		jFormattedCpf.setBounds(77, 29, 98, 20);
-		jPDadosCliente.add(jFormattedCpf);
+		jTableCliente.setModel(new javax.swing.table.DefaultTableModel(
+				new Object[][] { { null, null, null, null },
+						{ null, null, null, null }, { null, null, null, null },
+						{ null, null, null, null } }, new String[] { "Title 1",
+						"Title 2", "Title 3", "Title 4" }));
+		jScrollPaneListarCliente.setViewportView(jTableCliente);
 
-		jLNomeCliente = new JLabel("Nome Cliente:");
-		jLNomeCliente.setBounds(196, 32, 67, 14);
-		jPDadosCliente.add(jLNomeCliente);
-
-		jTNomeCliente = new JTextField();
-		jTNomeCliente.setBounds(273, 29, 388, 20);
-		jPDadosCliente.add(jTNomeCliente);
-		jTNomeCliente.setColumns(10);
-
-		jLRg = new JLabel("RG:");
-		jLRg.setBounds(10, 70, 28, 14);
-		jPDadosCliente.add(jLRg);
-
-		jTRg = new JTextField();
-		jTRg.setBounds(77, 67, 98, 20);
-		jPDadosCliente.add(jTRg);
-		jTRg.setColumns(10);
-
-		jLNomeMae = new JLabel("Nome M\u00E3e:");
-		jLNomeMae.setBounds(196, 70, 67, 14);
-		jPDadosCliente.add(jLNomeMae);
-
-		jTNomeMae = new JTextField();
-		jTNomeMae.setBounds(273, 67, 388, 20);
-		jPDadosCliente.add(jTNomeMae);
-		jTNomeMae.setColumns(10);
-
-		jLDataNasc = new JLabel("Data Nasc:");
-		jLDataNasc.setBounds(10, 105, 54, 14);
-		jPDadosCliente.add(jLDataNasc);
-
-		jLNomePai = new JLabel("Nome Pai:");
-		jLNomePai.setBounds(196, 105, 54, 14);
-		jPDadosCliente.add(jLNomePai);
-
-		jTNomePai = new JTextField();
-		jTNomePai.setBounds(273, 102, 388, 20);
-		jPDadosCliente.add(jTNomePai);
-		jTNomePai.setColumns(10);
-
-		jFormattedDataNasc = new JFormattedTextField();
-		jFormattedDataNasc.setBounds(77, 102, 98, 20);
-		jFormattedDataNasc
-				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
-						new javax.swing.text.MaskFormatter("##/##/####")));
-		jPDadosCliente.add(jFormattedDataNasc);
-
-		jLSexo = new JLabel("Sexo:");
-		jLSexo.setBounds(10, 140, 46, 14);
-		jPDadosCliente.add(jLSexo);
-
-		jCSexo = new JComboBox();
-		jCSexo.setModel(new DefaultComboBoxModel(new String[] { "",
-				"MASCULINO", "FEMININO" }));
-		jCSexo.setBounds(77, 137, 98, 20);
-		jPDadosCliente.add(jCSexo);
-
-		jLEstadoCivil = new JLabel("Estado Civil:");
-		jLEstadoCivil.setBounds(196, 140, 67, 14);
-		jPDadosCliente.add(jLEstadoCivil);
-
-		jCEstadoCivil = new JComboBox();
-		jCEstadoCivil
-				.setModel(new DefaultComboBoxModel(new String[] { "",
-						"SOLTEIRO", "CASADO", "DIVORCIADO", "SEPARADO",
-						"VI\u00DAVO" }));
-		jCEstadoCivil.setBounds(273, 137, 98, 20);
-		jPDadosCliente.add(jCEstadoCivil);
-
-		jLEmail = new JLabel("Email:");
-		jLEmail.setBounds(398, 140, 46, 14);
-		jPDadosCliente.add(jLEmail);
-
-		jTEmail = new JTextField();
-		jTEmail.setBounds(454, 137, 207, 20);
-		jPDadosCliente.add(jTEmail);
-		jTEmail.setColumns(10);
-
-		jLCep = new JLabel("CEP:");
-		jLCep.setBounds(10, 175, 46, 14);
-		jPDadosCliente.add(jLCep);
-
-		jFormattedCep = new JFormattedTextField();
-		jFormattedCep.setBounds(77, 172, 98, 20);
-		jFormattedCep
-				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
-						new javax.swing.text.MaskFormatter("##.###-###")));
-		jPDadosCliente.add(jFormattedCep);
-
-		jLEndereco = new JLabel("Endere\u00E7o:");
-		jLEndereco.setBounds(196, 175, 54, 14);
-		jPDadosCliente.add(jLEndereco);
-
-		jTEndereco = new JTextField();
-		jTEndereco.setBounds(273, 172, 388, 20);
-		jPDadosCliente.add(jTEndereco);
-		jTEndereco.setColumns(10);
-
-		jLEstado = new JLabel("Estado:");
-		jLEstado.setBounds(10, 210, 46, 14);
-		jPDadosCliente.add(jLEstado);
-
-		jCEstado = new JComboBox();
-		jCEstado.setBounds(77, 207, 98, 20);
-		jPDadosCliente.add(jCEstado);
-
-		jLCidade = new JLabel("Cidade:");
-		jLCidade.setBounds(196, 210, 46, 14);
-		jPDadosCliente.add(jLCidade);
-
-		jCCidade = new JComboBox();
-		jCCidade.setBounds(273, 207, 233, 20);
-		jPDadosCliente.add(jCCidade);
-
-		jLTelefone = new JLabel("Telefone:");
-		jLTelefone.setBounds(10, 245, 46, 14);
-		jPDadosCliente.add(jLTelefone);
-
-		jTTelefone = new JTextField();
-		jTTelefone.setBounds(77, 242, 98, 20);
-		jPDadosCliente.add(jTTelefone);
-		jTTelefone.setColumns(10);
-
-		jLBairro = new JLabel("Bairro:");
-		jLBairro.setBounds(196, 245, 46, 14);
-		jPDadosCliente.add(jLBairro);
-
-		jTBairro = new JTextField();
-		jTBairro.setBounds(273, 242, 388, 20);
-		jPDadosCliente.add(jTBairro);
-		jTBairro.setColumns(10);
-
-		jPListar = new JPanel();
-		tabbedPaneCliente.addTab("Listar Cliente", null, jPListar, null);
-		jPListar.setLayout(null);
+		jTPesquisar = new JTextField();
+		jTPesquisar.setColumns(10);
 
 		jBPesquisar = new JButton("Pesquisar");
 		jBPesquisar.addActionListener(new ActionListener() {
@@ -355,34 +475,136 @@ public class JFCustomer extends JFrame {
 				try {
 					pesquisarCliente();
 				} catch (SQLException ex) {
-					Logger.getLogger(JFLogin.class.getName()).log(Level.SEVERE,
-							null, ex.getMessage());
+					Logger.getLogger(JFCustomer.class.getName()).log(
+							Level.SEVERE, null, ex.getMessage());
 					JOptionPane.showMessageDialog(null, ex);
 				}
 			}
 		});
 		jBPesquisar.setIcon(new ImageIcon(JFCustomer.class
 				.getResource("/projeto/vendas/images/1999_16x16.png")));
-		jBPesquisar.setBounds(576, 11, 105, 23);
-		jPListar.add(jBPesquisar);
 
-		jTPesquisar = new JTextField();
-		jTPesquisar.setBounds(10, 12, 556, 20);
-		jPListar.add(jTPesquisar);
-		jTPesquisar.setColumns(10);
+		javax.swing.GroupLayout jPListarLayout = new javax.swing.GroupLayout(
+				jPListar);
+		jPListarLayout
+				.setHorizontalGroup(jPListarLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								Alignment.TRAILING,
+								jPListarLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												jPListarLayout
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addComponent(
+																jScrollPaneListarCliente,
+																Alignment.LEADING,
+																GroupLayout.DEFAULT_SIZE,
+																885,
+																Short.MAX_VALUE)
+														.addGroup(
+																jPListarLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jTPesquisar,
+																				GroupLayout.DEFAULT_SIZE,
+																				778,
+																				Short.MAX_VALUE)
+																		.addGap(18)
+																		.addComponent(
+																				jBPesquisar)))
+										.addContainerGap()));
+		jPListarLayout
+				.setVerticalGroup(jPListarLayout
+						.createParallelGroup(Alignment.TRAILING)
+						.addGroup(
+								Alignment.LEADING,
+								jPListarLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												jPListarLayout
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																jTPesquisar,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jBPesquisar))
+										.addGap(18)
+										.addComponent(jScrollPaneListarCliente,
+												GroupLayout.DEFAULT_SIZE, 289,
+												Short.MAX_VALUE)
+										.addContainerGap()));
+		jPListar.setLayout(jPListarLayout);
 
-		jScrollPaneListarCliente = new JScrollPane();
-		jScrollPaneListarCliente.setBounds(10, 43, 1071, 363);
-		jPListar.add(jScrollPaneListarCliente);
+		tabbedPaneCliente.addTab("Listar Cliente", jPListar);
 
-		jTableCliente = new JTable();
+		javax.swing.GroupLayout jPContentCustomerLayout = new javax.swing.GroupLayout(
+				jPContentCustomer);
+		jPContentCustomer.setLayout(jPContentCustomerLayout);
+		jPContentCustomerLayout.setHorizontalGroup(jPContentCustomerLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						jPContentCustomerLayout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(tabbedPaneCliente)
+								.addContainerGap()));
+		jPContentCustomerLayout.setVerticalGroup(jPContentCustomerLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						jPContentCustomerLayout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(tabbedPaneCliente)
+								.addContainerGap()));
+
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
+				getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				layout.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jPContentCustomer,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE).addContainerGap()));
+		layout.setVerticalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				layout.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jPContentCustomer,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE).addContainerGap()));
+
+		pack();
+
 		jTableCliente.setModel(tmCliente);
 		arrumaTabela();
+
 		jScrollPaneListarCliente.setViewportView(jTableCliente);
 
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 
+	}
+
+	public void arrumaTabela() {
+		jTableCliente.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		jTableCliente.getColumnModel().getColumn(0).setPreferredWidth(85);
+		jTableCliente.getColumnModel().getColumn(1).setPreferredWidth(220);
+		jTableCliente.getColumnModel().getColumn(2).setPreferredWidth(140);
+		jTableCliente.getColumnModel().getColumn(3).setPreferredWidth(80);
+		jTableCliente.getColumnModel().getColumn(4).setPreferredWidth(220);
+		jTableCliente.getColumnModel().getColumn(5).setPreferredWidth(60);
+		jTableCliente.getColumnModel().getColumn(6).setPreferredWidth(100);
+		jTableCliente.getColumnModel().getColumn(7).setPreferredWidth(50);
+		jTableCliente.getColumnModel().getColumn(8).setPreferredWidth(60);
 	}
 
 	public final void desabilitaDados() {
@@ -393,12 +615,12 @@ public class JFCustomer extends JFrame {
 		jTEndereco.setEnabled(false);
 		jFormattedCep.setEnabled(false);
 		jTBairro.setEnabled(false);
-		jCEstado.setEnabled(false);
-		jCCidade.setEnabled(false);
+		jCBEstado.setEnabled(false);
+		jCBCidade.setEnabled(false);
 		jTNomePai.setEnabled(false);
 		jTNomeMae.setEnabled(false);
-		jCSexo.setEnabled(false);
-		jCEstadoCivil.setEnabled(false);
+		jCBSexo.setEnabled(false);
+		jCBEstadoCivil.setEnabled(false);
 		jTRg.setEnabled(false);
 		jFormattedDataNasc.setEnabled(false);
 	}
@@ -411,12 +633,12 @@ public class JFCustomer extends JFrame {
 		jTEndereco.setEnabled(true);
 		jFormattedCep.setEnabled(true);
 		jTBairro.setEnabled(true);
-		jCEstado.setEnabled(true);
-		jCCidade.setEnabled(true);
+		jCBEstado.setEnabled(true);
+		jCBCidade.setEnabled(true);
 		jTNomePai.setEnabled(true);
 		jTNomeMae.setEnabled(true);
-		jCSexo.setEnabled(true);
-		jCEstadoCivil.setEnabled(true);
+		jCBSexo.setEnabled(true);
+		jCBEstadoCivil.setEnabled(true);
 		jTRg.setEnabled(true);
 		jFormattedDataNasc.setEnabled(true);
 	}
@@ -429,14 +651,92 @@ public class JFCustomer extends JFrame {
 		jTEndereco.setText("");
 		jFormattedCep.setText("");
 		jTBairro.setText("");
-		jCEstado.setSelectedItem(null);
-		jCCidade.setSelectedItem(null);
+		jCBEstado.setSelectedItem(null);
+		jCBCidade.setSelectedItem(null);
 		jTNomePai.setText("");
 		jTNomeMae.setText("");
-		jCSexo.setSelectedItem(null);
-		jCEstadoCivil.setSelectedItem(null);
+		jCBSexo.setSelectedItem(null);
+		jCBEstadoCivil.setSelectedItem(null);
 		jTRg.setText("");
 		jFormattedDataNasc.setText("");
+	}
+
+	public boolean verificaDados() {
+		if (jFormattedCpf.getText().equals("") || jTNomeCliente.getText().equals("")
+				|| jTRg.getText().equals("") || jTNomeMae.getText().equals("")
+				|| jFormattedDataNasc.getText().equals("")
+				|| jTNomePai.getText().equals("")
+				|| jCBSexo.getSelectedItem().toString().equals("")
+				|| jCBEstadoCivil.getSelectedItem().toString().equals("")
+				|| jTEmail.getText().equals("") || jFormattedCep.getText().equals("")
+				|| jTEndereco.getText().equals("")
+				|| jCBEstado.getSelectedItem().toString().equals("")
+				|| jCBCidade.getSelectedItem().toString().equals("")
+				|| jTTelefone.getText().equals("")
+				|| jTBairro.getText().equals("")) {
+			JOptionPane.showMessageDialog(this,
+					"Campos do cliente não podem ser vazios");
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public void carregaJCEstado() throws SQLException {
+		List<Estado> estados = controlCus.listaEstados();
+
+		for (Estado estado : estados) {
+			jCBEstado.addItem(estado.getNome_estado());
+		}
+
+		jCBEstado.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					if (e.getStateChange() == ItemEvent.SELECTED) {
+						jCBCidade.removeAllItems();
+						carregaJBCidade();
+					}
+
+				} catch (SQLException ex) {
+					Logger.getLogger(JFCustomer.class.getName()).log(
+							Level.SEVERE, null, ex.getMessage());
+					JOptionPane.showMessageDialog(null, ex);
+				}
+
+			}
+		});
+
+	}
+
+	public void carregaJBCidade() throws SQLException {
+		List<Cidade> cd = controlCus.listaCidades(jCBEstado.getSelectedItem()
+				.toString());
+
+		for (int i = 0; i < cd.size(); i++) {
+			jCBCidade.addItem(cd.get(i).getNome_cidade());
+		}
+	}
+
+	public void salvarCliente() throws SQLException, ParseException {
+
+		customer = new Customer(Long.parseLong(jFormattedCpf.getText().replace(".", "")
+				.replace("-", "")),
+				jCBEstadoCivil.getSelectedItem().toString(), jCBSexo
+						.getSelectedItem().toString(), jTNomeCliente.getText()
+						.toUpperCase(), jTRg.getText(),
+				customer.convertToDate(jFormattedDataNasc.getText()), jTEndereco
+						.getText().toUpperCase(), Long.parseLong(jFormattedCep
+						.getText().replace(".", "").replace("-", "")),
+				jTNomeMae.getText().toUpperCase(), jTNomePai.getText()
+						.toUpperCase(), Long.parseLong(jTTelefone.getText()),
+				jCBEstado.getSelectedItem().toString(), jCBCidade
+						.getSelectedItem().toString(), jTEmail.getText()
+						.toUpperCase(), jTBairro.getText().toUpperCase());
+
+		controlCus.cadastrarCliente(customer);
+		JOptionPane.showMessageDialog(this, "Cadastrado com sucesso");
 	}
 
 	public void pesquisarCliente() throws SQLException {
@@ -469,90 +769,5 @@ public class JFCustomer extends JFrame {
 				tmCliente.setValueAt(clientes.get(i).getCidade(), i, 8);
 			}
 		}
-	}
-	
-	public void arrumaTabela() {
-		jTableCliente.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		jTableCliente.getColumnModel().getColumn(0).setPreferredWidth(90);
-		jTableCliente.getColumnModel().getColumn(1).setPreferredWidth(210);
-		jTableCliente.getColumnModel().getColumn(2).setPreferredWidth(140);
-	}
-
-	public boolean verificaDados() {
-		if (jFormattedCpf.getText().equals("")
-				|| jTNomeCliente.getText().equals("")
-				|| jTRg.getText().equals("") || jTNomeMae.getText().equals("")
-				|| jFormattedDataNasc.getText().equals("")
-				|| jTNomePai.getText().equals("")
-				|| jCSexo.getSelectedItem().toString().equals("")
-				|| jCEstadoCivil.getSelectedItem().toString().equals("")
-				|| jTEmail.getText().equals("")
-				|| jFormattedCep.getText().equals("")
-				|| jTEndereco.getText().equals("")
-				|| jCEstado.getSelectedItem().toString().equals("")
-				|| jCCidade.getSelectedItem().toString().equals("")
-				|| jTTelefone.getText().equals("")
-				|| jTBairro.getText().equals("")) {
-			JOptionPane.showMessageDialog(this,
-					"Campos do cliente não podem ser vazios");
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	public void carregaJCEstado() throws SQLException {
-		List<Estado> estados = controlCus.listaEstados();
-
-		for (Estado estado : estados) {
-			jCEstado.addItem(estado.getNome_estado());
-		}
-
-		jCEstado.addItemListener(new ItemListener() {
-
-			public void itemStateChanged(ItemEvent e) {
-				try {
-					if (e.getStateChange() == ItemEvent.SELECTED) {
-						jCCidade.removeAllItems();
-						carregaJBCidade();
-					}
-
-				} catch (SQLException ex) {
-					Logger.getLogger(JFCustomer.class.getName()).log(
-							Level.SEVERE, null, ex.getMessage());
-					JOptionPane.showMessageDialog(null, ex);
-				}
-
-			}
-		});
-
-	}
-
-	public void carregaJBCidade() throws SQLException {
-		List<Cidade> cd = controlCus.listaCidades(jCEstado.getSelectedItem()
-				.toString());
-
-		for (int i = 0; i < cd.size(); i++) {
-			jCCidade.addItem(cd.get(i).getNome_cidade());
-		}
-	}
-
-	public void salvarCliente() throws SQLException, ParseException {
-
-		customer = new Customer(Long.parseLong(jFormattedCpf.getText()
-				.replace(".", "").replace("-", "")), jCEstadoCivil
-				.getSelectedItem().toString(), jCSexo.getSelectedItem()
-				.toString(), jTNomeCliente.getText().toUpperCase(),
-				jTRg.getText(), customer.convertToDate(jFormattedDataNasc
-						.getText()), jTEndereco.getText().toUpperCase(),
-				Long.parseLong(jFormattedCep.getText().replace(".", "")
-						.replace("-", "")), jTNomeMae.getText().toUpperCase(),
-				jTNomePai.getText().toUpperCase(), Long.parseLong(jTTelefone
-						.getText()), jCEstado.getSelectedItem().toString(),
-				jCCidade.getSelectedItem().toString(), jTEmail.getText()
-						.toUpperCase(), jTBairro.getText().toUpperCase());
-
-		controlCus.cadastrarCliente(customer);
-		JOptionPane.showMessageDialog(this, "Cadastrado com sucesso");
 	}
 }

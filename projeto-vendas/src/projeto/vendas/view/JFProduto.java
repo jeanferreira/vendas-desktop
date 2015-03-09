@@ -138,10 +138,8 @@ public class JFProduto extends JFrame {
 		jBNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
-					habilitaDados();
-					
-			
+				habilitaDados();
+
 			}
 		});
 		jBNovo.setIcon(new ImageIcon(JFProduto.class
@@ -271,7 +269,6 @@ public class JFProduto extends JFrame {
 			return false;
 		} else {
 			return true;
-
 		}
 	}
 

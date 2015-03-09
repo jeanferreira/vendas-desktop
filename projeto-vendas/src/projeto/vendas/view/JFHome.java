@@ -98,7 +98,7 @@ public class JFHome extends JFrame {
 
 		jMenuItemCliente = new JMenuItem("Cliente");
 		jMenuItemCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)  {
 				try {
 					if (jfcustomer == null) {
 						jfcustomer = new JFCustomer();
