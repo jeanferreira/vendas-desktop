@@ -26,9 +26,12 @@ import projeto.vendas.model.Produto;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class JFBuscaProduto extends JFrame {
 
+	private static JFBuscaProduto INSTANCIA_BUSCA_PRODUTO;
+	
 	private List<Produto> lsProduto;
 	private final ProductDAO pDAO;
 	
@@ -49,11 +52,19 @@ public class JFBuscaProduto extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	public static synchronized JFBuscaProduto getInstance() throws SQLException {
+		if (INSTANCIA_BUSCA_PRODUTO == null) {
+			INSTANCIA_BUSCA_PRODUTO = new JFBuscaProduto();
+		}
+		return INSTANCIA_BUSCA_PRODUTO;
+	}
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFBuscaProduto frame = new JFBuscaProduto();
+					JFBuscaProduto frame = getInstance();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,6 +78,7 @@ public class JFBuscaProduto extends JFrame {
 	 * @throws SQLException 
 	 */
 	public JFBuscaProduto() throws SQLException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JFBuscaProduto.class.getResource("/projeto/vendas/images/cer_btn12.png")));
 		initComponents();
 		this.pDAO = new ProductDAO();
 	}

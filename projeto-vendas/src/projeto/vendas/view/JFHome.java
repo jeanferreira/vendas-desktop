@@ -19,9 +19,15 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.awt.Toolkit;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.TitledBorder;
+import javax.swing.JLabel;
 
 public class JFHome extends JFrame {
 
+	public static JFHome INSTANCIA_HOME;
 	/**
 	 * 
 	 */
@@ -38,6 +44,16 @@ public class JFHome extends JFrame {
 	private JMenuItem jMenuItemProduto;
 	private JMenuItem jMenuItemVenda;
 	private JFLogin jflogin;
+	private JPanel jPDadosUsuario;
+	private JLabel jLUsuario;
+	private JLabel jLNomeUsuario;
+	
+	public static synchronized JFHome getInstance() throws SQLException {
+		if (INSTANCIA_HOME == null) {
+			INSTANCIA_HOME = new JFHome();
+		}
+		return INSTANCIA_HOME;
+	}
 
 	/**
 	 * Launch the application.
@@ -46,7 +62,7 @@ public class JFHome extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFHome frame = new JFHome();
+					JFHome frame = getInstance();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,8 +73,10 @@ public class JFHome extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public JFHome() {
+	public JFHome() throws SQLException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JFHome.class.getResource("/projeto/vendas/images/cer_btn12.png")));
 		initComponents();
 	}
 
@@ -157,9 +175,52 @@ public class JFHome extends JFrame {
 		jMenuCadastro.add(jMenuItemVenda);
 		jPHome = new JPanel();
 		jPHome.setBorder(new EmptyBorder(5, 5, 5, 5));
-		jPHome.setLayout(new BorderLayout(0, 0));
 		setContentPane(jPHome);
+		
+		jPDadosUsuario = new JPanel();
+		jPDadosUsuario.setBorder(new TitledBorder(null, "Dados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GroupLayout gl_jPHome = new GroupLayout(jPHome);
+		gl_jPHome.setHorizontalGroup(
+			gl_jPHome.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_jPHome.createSequentialGroup()
+					.addContainerGap(603, Short.MAX_VALUE)
+					.addComponent(jPDadosUsuario, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_jPHome.setVerticalGroup(
+			gl_jPHome.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jPHome.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(jPDadosUsuario, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(444, Short.MAX_VALUE))
+		);
+		
+		jLUsuario = new JLabel("Usu\u00E1rio:");
+		
+		jLNomeUsuario = new JLabel("nome");
+		GroupLayout gl_jPDadosUsuario = new GroupLayout(jPDadosUsuario);
+		gl_jPDadosUsuario.setHorizontalGroup(
+			gl_jPDadosUsuario.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jPDadosUsuario.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(jLUsuario)
+					.addGap(18)
+					.addComponent(jLNomeUsuario)
+					.addContainerGap(34, Short.MAX_VALUE))
+		);
+		gl_jPDadosUsuario.setVerticalGroup(
+			gl_jPDadosUsuario.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jPDadosUsuario.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_jPDadosUsuario.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jLUsuario)
+						.addComponent(jLNomeUsuario))
+					.addContainerGap(23, Short.MAX_VALUE))
+		);
+		jPDadosUsuario.setLayout(gl_jPDadosUsuario);
+		jPHome.setLayout(gl_jPHome);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
+	
 }

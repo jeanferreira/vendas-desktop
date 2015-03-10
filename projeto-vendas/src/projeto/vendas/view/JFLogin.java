@@ -22,8 +22,11 @@ import javax.swing.JPasswordField;
 
 import projeto.vendas.dao.UserDAO;
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class JFLogin extends JFrame {
+	
+	private static JFLogin INSTANCIA_LOGIN;
 
 	
 	private static final long serialVersionUID = 1L;
@@ -38,9 +41,11 @@ public class JFLogin extends JFrame {
 	private JFHome jfhome;
 	private static JFLogin jflogin;
 	
-	public static JFLogin getInstance() throws SQLException {
-		if (jflogin == null) {
-			jflogin = new JFLogin();
+	
+
+	public static synchronized JFLogin getInstance() throws SQLException {
+		if (INSTANCIA_LOGIN == null) {
+			INSTANCIA_LOGIN = new JFLogin();
 		}
 		return jflogin;
 	}
@@ -52,7 +57,7 @@ public class JFLogin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFLogin frame = new JFLogin();
+					JFLogin frame = getInstance();
 					frame.setVisible(true);
 				} catch (Exception ex) {
 					Logger.getLogger(JFLogin.class.getName()).log(Level.SEVERE, null, ex.getMessage());
@@ -67,6 +72,7 @@ public class JFLogin extends JFrame {
 	 * @throws SQLException 
 	 */
 	public JFLogin() throws SQLException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JFLogin.class.getResource("/projeto/vendas/images/cer_btn12.png")));
 		
 		this.usDAO = new UserDAO();
 		initComponents();
@@ -155,7 +161,6 @@ public class JFLogin extends JFrame {
 	public void limpaDados() {
 		jTUsuario.setText("");
 		JPassSenha.setText("");
-	}
-	
+	}	
 	
 }

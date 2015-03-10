@@ -29,12 +29,15 @@ import javax.swing.JTable;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class JFProduto extends JFrame {
 
 	/**
 	 * 
 	 */
+	private static JFProduto INSTANCIA_PRODUTO;
+	
 	private final ProductDAO pDAO;
 	private Produto pr;
 	private List<Produto> lsProduto;
@@ -68,12 +71,20 @@ public class JFProduto extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * @throws SQLException 
 	 */
+	
+	public static synchronized JFProduto getInstance() throws SQLException {
+		if (INSTANCIA_PRODUTO == null) {
+			INSTANCIA_PRODUTO = new JFProduto();
+		}
+		return INSTANCIA_PRODUTO;
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFProduto frame = new JFProduto();
+					JFProduto frame = getInstance();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -88,6 +99,7 @@ public class JFProduto extends JFrame {
 	 * @throws SQLException
 	 */
 	public JFProduto() throws SQLException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JFProduto.class.getResource("/projeto/vendas/images/cer_btn12.png")));
 		initComponents();
 		desabilitaDados();
 		setLocationRelativeTo(null);

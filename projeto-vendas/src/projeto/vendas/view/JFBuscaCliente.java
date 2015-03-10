@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class JFBuscaCliente extends JFrame {
 
@@ -36,6 +37,8 @@ public class JFBuscaCliente extends JFrame {
 	/**
 	 * 
 	 */
+	private static JFBuscaCliente INSTANCIA_BUSCA_CLIENTE;
+	
 	private static final long serialVersionUID = 6003519484200486878L;
 	private JPanel contentPane;
 	private JButton jBPesquisar;
@@ -55,12 +58,20 @@ public class JFBuscaCliente extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * @throws SQLException 
 	 */
+	
+	public static synchronized JFBuscaCliente getInstance() throws SQLException {
+		if (INSTANCIA_BUSCA_CLIENTE == null) {
+			INSTANCIA_BUSCA_CLIENTE = new JFBuscaCliente();
+		}
+		return INSTANCIA_BUSCA_CLIENTE;
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFBuscaCliente frame = new JFBuscaCliente();
+					JFBuscaCliente frame = getInstance();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,6 +86,7 @@ public class JFBuscaCliente extends JFrame {
 	 * @throws SQLException
 	 */
 	public JFBuscaCliente() throws SQLException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JFBuscaCliente.class.getResource("/projeto/vendas/images/cer_btn12.png")));
 		initComponents();
 		this.controlCus = new CustomerDAO();
 

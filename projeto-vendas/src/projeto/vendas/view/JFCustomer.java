@@ -46,12 +46,16 @@ import projeto.vendas.model.Customer;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Toolkit;
 
 public class JFCustomer extends JFrame {
 
 	/**
 	 * 
 	 */
+	private static JFCustomer INSTANCIA_CUSTOMER;
+	
+	
 	private static final long serialVersionUID = 2393976050363117949L;
 	private JPanel jPContentCustomer;
 	private final CustomerDAO controlCus;
@@ -111,12 +115,21 @@ public class JFCustomer extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * @throws ParseException 
+	 * @throws SQLException 
 	 */
+	
+	public static synchronized JFCustomer getInstance() throws SQLException, ParseException {
+		if (INSTANCIA_CUSTOMER == null) {
+			INSTANCIA_CUSTOMER = new JFCustomer();
+		}
+		return INSTANCIA_CUSTOMER;
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFCustomer frame = new JFCustomer();
+					JFCustomer frame = getInstance();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -132,6 +145,7 @@ public class JFCustomer extends JFrame {
 	 * @throws ParseException
 	 */
 	public JFCustomer() throws SQLException, ParseException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JFCustomer.class.getResource("/projeto/vendas/images/cer_btn12.png")));
 		initComponents();
 		desabilitaDados();
 		this.controlCus = new CustomerDAO();

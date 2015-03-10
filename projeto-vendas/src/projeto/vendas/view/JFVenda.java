@@ -28,9 +28,12 @@ import java.util.logging.Logger;
 
 import javax.swing.JTable;
 import javax.swing.JSeparator;
+import java.awt.Toolkit;
 
 public class JFVenda extends JFrame {
 
+	private static JFVenda INSTANCIA_VENDA;
+	
 	private JPanel jPContentVenda;
 	private JTabbedPane jTabbedPaneVendas;
 	private JPanel jPVenda;
@@ -93,11 +96,18 @@ public class JFVenda extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	public static synchronized JFVenda getInstance() {
+		if (INSTANCIA_VENDA == null) {
+			INSTANCIA_VENDA = new JFVenda();
+		}
+		return INSTANCIA_VENDA;
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFVenda frame = new JFVenda();
+					JFVenda frame = getInstance();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -110,6 +120,7 @@ public class JFVenda extends JFrame {
 	 * Create the frame.
 	 */
 	public JFVenda() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JFVenda.class.getResource("/projeto/vendas/images/cer_btn12.png")));
 		initComponents();
 		desabilitaDados();
 	}

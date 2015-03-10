@@ -18,6 +18,7 @@ public class UserDAO {
 	private final Connection conexao;
 	private User us;
 	private static final String CONNECT = "SELECT *FROM usuario us WHERE us.usuario = ? AND us.senha = ?";
+	private static final String GET_USER = "";
 	private boolean AUTENTICADO = false;
 
 	public UserDAO() throws SQLException {
@@ -41,5 +42,10 @@ public class UserDAO {
 
 		return AUTENTICADO;
 
+	}
+	
+	public String getUsuario() {
+		return null;
+		
 	}
 }
