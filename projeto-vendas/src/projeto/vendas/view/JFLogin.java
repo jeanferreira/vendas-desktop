@@ -25,10 +25,9 @@ import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 
 public class JFLogin extends JFrame {
-	
+
 	private static JFLogin INSTANCIA_LOGIN;
 
-	
 	private static final long serialVersionUID = 1L;
 	private JPanel jPLogin;
 	private JTextField jTUsuario;
@@ -39,64 +38,27 @@ public class JFLogin extends JFrame {
 	private JButton jBEntrar;
 	private final UserDAO usDAO;
 	private JFHome jfhome;
-	private static JFLogin jflogin;
-	
-	
 
 	public static synchronized JFLogin getInstance() throws SQLException {
 		if (INSTANCIA_LOGIN == null) {
 			INSTANCIA_LOGIN = new JFLogin();
 		}
-		return jflogin;
+		return INSTANCIA_LOGIN;
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFLogin frame = getInstance();
-					frame.setVisible(true);
-				} catch (Exception ex) {
-					Logger.getLogger(JFLogin.class.getName()).log(Level.SEVERE, null, ex.getMessage());
-                    JOptionPane.showMessageDialog(null, ex);
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * @throws SQLException 
-	 */
 	public JFLogin() throws SQLException {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JFLogin.class.getResource("/projeto/vendas/images/cer_btn12.png")));
-		
-		this.usDAO = new UserDAO();
 		initComponents();
-		
-		jBEntrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					conectar();
-				} catch (SQLException ex) {
-					Logger.getLogger(JFLogin.class.getName()).log(Level.SEVERE, null, ex.getMessage());
-		            JOptionPane.showMessageDialog(null, ex);
-				}
-			}
-		});
-		jBEntrar.setBounds(10, 107, 223, 23);
-		jPDados.add(jBEntrar);
-		
-		
-		setLocationRelativeTo(null);
+		this.usDAO = new UserDAO();
 	}
 
 	private void initComponents() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JFLogin.class
+						.getResource("/projeto/vendas/images/cer_btn12.png")));
 		setBounds(100, 100, 647, 397);
+		setLocationRelativeTo(null);
+
 		jPLogin = new JPanel();
 		jPLogin.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(jPLogin);
@@ -123,17 +85,30 @@ public class JFLogin extends JFrame {
 		jLSenha = new JLabel("Senha:");
 		jLSenha.setBounds(10, 71, 46, 14);
 		jPDados.add(jLSenha);
-		
+
 		JPassSenha = new JPasswordField();
 		JPassSenha.setBounds(66, 68, 167, 20);
 		jPDados.add(JPassSenha);
 
 		jBEntrar = new JButton("Entrar");
-		jBEntrar.setIcon(new ImageIcon(JFLogin.class.getResource("/projeto/vendas/images/icone_login.png")));
-		
+		jBEntrar.setIcon(new ImageIcon(JFLogin.class
+				.getResource("/projeto/vendas/images/icone_login.png")));
+		jBEntrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					conectar();
+				} catch (SQLException ex) {
+					Logger.getLogger(JFLogin.class.getName()).log(Level.SEVERE,
+							null, ex.getMessage());
+					JOptionPane.showMessageDialog(null, ex);
+				}
+			}
+		});
+		jBEntrar.setBounds(10, 107, 223, 23);
+		jPDados.add(jBEntrar);
+
 	}
 
-	@SuppressWarnings("deprecation")
 	public void conectar() throws SQLException {
 
 		if (jTUsuario.getText().equals("") || JPassSenha.getText().equals("")) {
@@ -157,10 +132,28 @@ public class JFLogin extends JFrame {
 			}
 		}
 	}
-	
+
 	public void limpaDados() {
 		jTUsuario.setText("");
 		JPassSenha.setText("");
-	}	
-	
+	}
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					JFLogin frame = getInstance();
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					Logger.getLogger(JFLogin.class.getName()).log(Level.SEVERE,
+							null, ex.getMessage());
+					JOptionPane.showMessageDialog(null, ex);
+				}
+			}
+		});
+	}
+
 }
