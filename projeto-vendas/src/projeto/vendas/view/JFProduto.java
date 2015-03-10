@@ -291,7 +291,7 @@ public class JFProduto extends JFrame {
 	}
 
 	public void pesquisarProduto() throws SQLException {
-		lsProduto = pDAO.listarProdutos("%" + jTPesquisar.getText() + "%");
+		lsProduto = pDAO.listarProdutos("%" + jTPesquisar.getText().toUpperCase() + "%");
 		mostrarProduto(lsProduto);
 	}
 

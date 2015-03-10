@@ -29,6 +29,7 @@ public class JFHome extends JFrame {
 	private JPanel jPHome;
 	private JFCustomer jfcustomer;
 	private JFProduto jfproduto;
+	private JFVenda jfvenda;
 	private JMenuBar jMenuHome;
 	private JMenu jMenuArquivo;
 	private JMenu jMenuCadastro;
@@ -141,6 +142,16 @@ public class JFHome extends JFrame {
 		jMenuCadastro.add(jMenuItemProduto);
 
 		jMenuItemVenda = new JMenuItem("Venda");
+		jMenuItemVenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (jfvenda == null) {
+					jfvenda = new JFVenda();
+					jfvenda.show();
+				}else {
+					jfvenda.setVisible(true);
+				}
+			}
+		});
 		jMenuItemVenda.setIcon(new ImageIcon(JFHome.class
 				.getResource("/projeto/vendas/images/7146_25X25.png")));
 		jMenuCadastro.add(jMenuItemVenda);
