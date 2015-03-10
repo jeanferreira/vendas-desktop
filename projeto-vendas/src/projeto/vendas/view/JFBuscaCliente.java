@@ -28,24 +28,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class JFBuscaCliente extends JFrame {
-
-	private final CustomerDAO controlCus;
-	List<Customer> lsCliente;
-
-	/**
-	 * 
-	 */
-	private static JFBuscaCliente INSTANCIA_BUSCA_CLIENTE;
 	
-	private static final long serialVersionUID = 6003519484200486878L;
-	private JPanel contentPane;
-	private JButton jBPesquisar;
-	private JTextField jTPesquisar;
-	private JPanel jPContentBuscaCliente;
-	private JTable jTableBuscaCliente;
-
 	DefaultTableModel tmBuscaCliente = new DefaultTableModel(null,
 			new String[] { "CPF", "NOME", "EMAIL", "TEL", "ENDEREÇO", "CEP",
 					"BAIRRO", "ESTADO", "CIDADE" }) {
@@ -54,46 +41,28 @@ public class JFBuscaCliente extends JFrame {
 			return false;
 		}
 	};
+
+	private static JFBuscaCliente INSTANCIA_BUSCA_CLIENTE;
+	private final CustomerDAO controlCus;
+	List<Customer> lsCliente;
+	private static JFVenda jfvenda ;
+	
+	private static final long serialVersionUID = 6003519484200486878L;
+	private JPanel contentPane;
+	private JButton jBPesquisar;
+	private JTextField jTPesquisar;
+	private JPanel jPContentBuscaCliente;
+	private JTable jTableBuscaCliente;
 	private JScrollPane jScrollPaneCliente;
 
-	/**
-	 * Launch the application.
-	 * @throws SQLException 
-	 */
-	
-	public static synchronized JFBuscaCliente getInstance() throws SQLException {
-		if (INSTANCIA_BUSCA_CLIENTE == null) {
-			INSTANCIA_BUSCA_CLIENTE = new JFBuscaCliente();
-		}
-		return INSTANCIA_BUSCA_CLIENTE;
-	}
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFBuscaCliente frame = getInstance();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @throws SQLException
-	 */
-	public JFBuscaCliente() throws SQLException {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JFBuscaCliente.class.getResource("/projeto/vendas/images/cer_btn12.png")));
+	public JFBuscaCliente(JFVenda jfvenda) throws SQLException {
 		initComponents();
 		this.controlCus = new CustomerDAO();
-
+		this.jfvenda = jfvenda;
 	}
-
+	
 	private void initComponents() {
-
+		setIconImage(Toolkit.getDefaultToolkit().getImage(JFBuscaCliente.class.getResource("/projeto/vendas/images/cer_btn12.png")));
 		setBounds(100, 100, 799, 401);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -147,6 +116,18 @@ public class JFBuscaCliente extends JFrame {
 		);
 
 		jTableBuscaCliente = new JTable();
+		jTableBuscaCliente.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					JFVenda frame = jfvenda;
+					frame.getjTCpf().setText(jTableBuscaCliente.getValueAt(jTableBuscaCliente.getSelectedRow(), 0).toString());
+					String x = jTableBuscaCliente.getValueAt(jTableBuscaCliente.getSelectedRow(), 0).toString();
+					System.out.println(x);
+					dispose();
+				}
+			}
+		});
 		jTableBuscaCliente.setModel(tmBuscaCliente);
 
 		jScrollPaneCliente = new JScrollPane();
@@ -178,6 +159,13 @@ public class JFBuscaCliente extends JFrame {
 
 	}
 
+	
+	public static synchronized JFBuscaCliente getInstance() throws SQLException {
+		if (INSTANCIA_BUSCA_CLIENTE == null) {
+			INSTANCIA_BUSCA_CLIENTE = new JFBuscaCliente(jfvenda);
+		}
+		return INSTANCIA_BUSCA_CLIENTE;
+	}
 	public void pesquisarCliente() throws SQLException {
 		lsCliente = controlCus.listarCliente("%"
 				+ jTPesquisar.getText().toUpperCase() + "%");
@@ -209,5 +197,18 @@ public class JFBuscaCliente extends JFrame {
 				tmBuscaCliente.setValueAt(clientes.get(i).getCidade(), i, 8);
 			}
 		}
+	}
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					JFBuscaCliente frame = getInstance();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }

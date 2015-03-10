@@ -622,39 +622,39 @@ public class JFCustomer extends JFrame {
 	}
 
 	public final void desabilitaDados() {
-		jFormattedCpf.setEnabled(false);
-		jTNomeCliente.setEnabled(false);
-		jTEmail.setEnabled(false);
-		jTTelefone.setEnabled(false);
-		jTEndereco.setEnabled(false);
-		jFormattedCep.setEnabled(false);
-		jTBairro.setEnabled(false);
-		jCBEstado.setEnabled(false);
-		jCBCidade.setEnabled(false);
-		jTNomePai.setEnabled(false);
-		jTNomeMae.setEnabled(false);
-		jCBSexo.setEnabled(false);
-		jCBEstadoCivil.setEnabled(false);
-		jTRg.setEnabled(false);
-		jFormattedDataNasc.setEnabled(false);
+		jFormattedCpf.setEditable(false);
+		jTNomeCliente.setEditable(false);
+		jTEmail.setEditable(false);
+		jTTelefone.setEditable(false);
+		jTEndereco.setEditable(false);
+		jFormattedCep.setEditable(false);
+		jTBairro.setEditable(false);
+		jCBEstado.setEditable(false);
+		jCBCidade.setEditable(false);
+		jTNomePai.setEditable(false);
+		jTNomeMae.setEditable(false);
+		jCBSexo.setEditable(false);
+		jCBEstadoCivil.setEditable(false);
+		jTRg.setEditable(false);
+		jFormattedDataNasc.setEditable(false);
 	}
 
 	public final void habilitaDados() {
-		jFormattedCpf.setEnabled(true);
-		jTNomeCliente.setEnabled(true);
-		jTEmail.setEnabled(true);
-		jTTelefone.setEnabled(true);
-		jTEndereco.setEnabled(true);
-		jFormattedCep.setEnabled(true);
-		jTBairro.setEnabled(true);
-		jCBEstado.setEnabled(true);
-		jCBCidade.setEnabled(true);
-		jTNomePai.setEnabled(true);
-		jTNomeMae.setEnabled(true);
-		jCBSexo.setEnabled(true);
-		jCBEstadoCivil.setEnabled(true);
-		jTRg.setEnabled(true);
-		jFormattedDataNasc.setEnabled(true);
+		jFormattedCpf.setEditable(true);
+		jTNomeCliente.setEditable(true);
+		jTEmail.setEditable(true);
+		jTTelefone.setEditable(true);
+		jTEndereco.setEditable(true);
+		jFormattedCep.setEditable(true);
+		jTBairro.setEditable(true);
+		jCBEstado.setEditable(true);
+		jCBCidade.setEditable(true);
+		jTNomePai.setEditable(true);
+		jTNomeMae.setEditable(true);
+		jCBSexo.setEditable(true);
+		jCBEstadoCivil.setEditable(true);
+		jTRg.setEditable(true);
+		jFormattedDataNasc.setEditable(true);
 	}
 
 	public void limparDados() {

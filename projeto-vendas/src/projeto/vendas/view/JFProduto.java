@@ -253,17 +253,17 @@ public class JFProduto extends JFrame {
 	}
 
 	public final void desabilitaDados() {
-		jTCod.setEnabled(false);
-		jCBTipo.setEnabled(false);
-		jTNome.setEnabled(false);
-		jTPreco.setEnabled(false);
+		jTCod.setEditable(false);
+		jCBTipo.setEditable(false);
+		jTNome.setEditable(false);
+		jTPreco.setEditable(false);
 	}
 
 	public void habilitaDados() {
-		jTCod.setEnabled(false);
-		jTNome.setEnabled(true);
-		jCBTipo.setEnabled(true);
-		jTPreco.setEnabled(true);
+		jTCod.setEditable(false);
+		jTNome.setEditable(true);
+		jCBTipo.setEditable(true);
+		jTPreco.setEditable(true);
 	}
 
 	public void limparDados() {

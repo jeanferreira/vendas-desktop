@@ -32,8 +32,16 @@ import java.awt.Toolkit;
 
 public class JFVenda extends JFrame {
 
+	DefaultTableModel tmProduto = new DefaultTableModel(null, new String[] {
+			"COD", "TIPO", "NOME", "PREÇO" }) {
+		@Override
+		public boolean isCellEditable(int row, int col) {
+			return false;
+		}
+	};
+
 	private static JFVenda INSTANCIA_VENDA;
-	
+
 	private JPanel jPContentVenda;
 	private JTabbedPane jTabbedPaneVendas;
 	private JPanel jPVenda;
@@ -85,47 +93,220 @@ public class JFVenda extends JFrame {
 	private JButton jBFinalizarVenda;
 	private JTable jTableProduto;
 
-	DefaultTableModel tmProduto = new DefaultTableModel(null, new String[] {
-			"COD", "TIPO", "NOME", "PREÇO" }) {
-		@Override
-		public boolean isCellEditable(int row, int col) {
-			return false;
-		}
-	};
-
-	/**
-	 * Launch the application.
-	 */
+	public JFVenda() {
+		initComponents();
+		desabilitaDados();
+	}
 	
+	public JFormattedTextField getjTCpf() {
+		return jTCpf;
+	}
+
+	public void setjTCpf(JFormattedTextField jTCpf) {
+		this.jTCpf = jTCpf;
+	}
+
+	public JTextField getjTNomeCliente() {
+		return jTNomeCliente;
+	}
+
+	public void setjTNomeCliente(JTextField jTNomeCliente) {
+		this.jTNomeCliente = jTNomeCliente;
+	}
+
+
+
+	public JTextField getjTNomeMae() {
+		return jTNomeMae;
+	}
+
+
+
+	public void setjTNomeMae(JTextField jTNomeMae) {
+		this.jTNomeMae = jTNomeMae;
+	}
+
+
+
+	public JTextField getjTRg() {
+		return jTRg;
+	}
+
+
+
+	public void setjTRg(JTextField jTRg) {
+		this.jTRg = jTRg;
+	}
+
+
+
+	public JFormattedTextField getjTDataNasc() {
+		return jTDataNasc;
+	}
+
+
+
+	public void setjTDataNasc(JFormattedTextField jTDataNasc) {
+		this.jTDataNasc = jTDataNasc;
+	}
+
+
+
+	public JTextField getjTNomePai() {
+		return jTNomePai;
+	}
+
+
+
+	public void setjTNomePai(JTextField jTNomePai) {
+		this.jTNomePai = jTNomePai;
+	}
+
+
+
+	public JTextField getjTTelefone() {
+		return jTTelefone;
+	}
+
+
+
+	public void setjTTelefone(JTextField jTTelefone) {
+		this.jTTelefone = jTTelefone;
+	}
+
+
+
+	public JTextField getjTSexo() {
+		return jTSexo;
+	}
+
+
+
+	public void setjTSexo(JTextField jTSexo) {
+		this.jTSexo = jTSexo;
+	}
+
+
+
+	public JTextField getjTEstadoCivil() {
+		return jTEstadoCivil;
+	}
+
+
+
+	public void setjTEstadoCivil(JTextField jTEstadoCivil) {
+		this.jTEstadoCivil = jTEstadoCivil;
+	}
+
+
+
+	public JTextField getjTEmail() {
+		return jTEmail;
+	}
+
+
+
+	public void setjTEmail(JTextField jTEmail) {
+		this.jTEmail = jTEmail;
+	}
+
+
+
+	public JTextField getjTEndereco() {
+		return jTEndereco;
+	}
+
+
+
+	public void setjTEndereco(JTextField jTEndereco) {
+		this.jTEndereco = jTEndereco;
+	}
+
+
+
+	public JTextField getjTBairro() {
+		return jTBairro;
+	}
+
+
+
+	public void setjTBairro(JTextField jTBairro) {
+		this.jTBairro = jTBairro;
+	}
+
+
+
+	public JTextField getjTCep() {
+		return jTCep;
+	}
+
+
+
+	public void setjTCep(JTextField jTCep) {
+		this.jTCep = jTCep;
+	}
+
+
+
+	public JTextField getjTCidade() {
+		return jTCidade;
+	}
+
+
+
+	public void setjTCidade(JTextField jTCidade) {
+		this.jTCidade = jTCidade;
+	}
+
+
+
+	public JTextField getjTEstado() {
+		return jTEstado;
+	}
+
+
+
+	public void setjTEstado(JTextField jTEstado) {
+		this.jTEstado = jTEstado;
+	}
+
+
+
+	public JTextField getjTCodProduto() {
+		return jTCodProduto;
+	}
+
+
+
+	public void setjTCodProduto(JTextField jTCodProduto) {
+		this.jTCodProduto = jTCodProduto;
+	}
+
+
+
+	public JFormattedTextField getjTDataVenda() {
+		return jTDataVenda;
+	}
+
+
+
+	public void setjTDataVenda(JFormattedTextField jTDataVenda) {
+		this.jTDataVenda = jTDataVenda;
+	}
+
+
+
 	public static synchronized JFVenda getInstance() {
 		if (INSTANCIA_VENDA == null) {
 			INSTANCIA_VENDA = new JFVenda();
 		}
 		return INSTANCIA_VENDA;
 	}
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFVenda frame = getInstance();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public JFVenda() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JFVenda.class.getResource("/projeto/vendas/images/cer_btn12.png")));
-		initComponents();
-		desabilitaDados();
-	}
 
 	private void initComponents() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JFVenda.class
+						.getResource("/projeto/vendas/images/cer_btn12.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 887, 599);
 		jPContentVenda = new JPanel();
@@ -371,14 +552,14 @@ public class JFVenda extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (jfbuscacliente == null) {
 					try {
-						jfbuscacliente = new JFBuscaCliente();
+						jfbuscacliente = new JFBuscaCliente(getInstance());
 						jfbuscacliente.show();
 					} catch (SQLException ex) {
 						Logger.getLogger(JFProduto.class.getName()).log(
 								Level.SEVERE, null, ex.getMessage());
 						JOptionPane.showMessageDialog(null, ex);
 					}
-					
+
 				} else {
 					jfbuscacliente.setVisible(true);
 				}
@@ -802,21 +983,34 @@ public class JFVenda extends JFrame {
 	}
 
 	public void desabilitaDados() {
-		jTCpf.setEnabled(false);
-		jTNomeCliente.setEnabled(false);
-		jTRg.setEnabled(false);
-		jTNomeMae.setEnabled(false);
-		jTDataNasc.setEnabled(false);
-		jTNomePai.setEnabled(false);
-		jTTelefone.setEnabled(false);
-		jTSexo.setEnabled(false);
-		jTEstadoCivil.setEnabled(false);
-		jTEmail.setEnabled(false);
-		jTEndereco.setEnabled(false);
-		jTBairro.setEnabled(false);
-		jTCep.setEnabled(false);
-		jTEstado.setEnabled(false);
-		jTCidade.setEnabled(false);
-		jTCodProduto.setEnabled(false);
+		jTCpf.setEditable(false);
+		jTNomeCliente.setEditable(false);
+		jTRg.setEditable(false);
+		jTNomeMae.setEditable(false);
+		jTDataNasc.setEditable(false);
+		jTNomePai.setEditable(false);
+		jTTelefone.setEditable(false);
+		jTSexo.setEditable(false);
+		jTEstadoCivil.setEditable(false);
+		jTEmail.setEditable(false);
+		jTEndereco.setEditable(false);
+		jTBairro.setEditable(false);
+		jTCep.setEditable(false);
+		jTEstado.setEditable(false);
+		jTCidade.setEditable(false);
+		jTCodProduto.setEditable(false);
+	}
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					JFVenda frame = getInstance();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }
