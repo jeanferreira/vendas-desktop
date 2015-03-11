@@ -125,13 +125,19 @@ public class JFBuscaCliente extends JFrame {
 					JFVenda frame = jfvenda;
 					frame.getjTCpf().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 0).toString());
 					frame.getjTNomeCliente().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 1).toString());
-					frame.getjTEmail().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 2).toString());
-					frame.getjTTelefone().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 3).toString());
-					frame.getjTEndereco().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 4).toString());
-					frame.getjTCep().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 5).toString());
-					frame.getjTBairro().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 6).toString());
-					frame.getjTEstado().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 7).toString());
-					frame.getjTCidade().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 8).toString());
+					frame.getjTRg().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 2).toString());
+					frame.getjTNomeMae().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 3).toString());
+					frame.getjTDataNasc().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 4).toString());
+					frame.getjTNomePai().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 5).toString());
+					frame.getjTTelefone().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 6).toString());
+					frame.getjTSexo().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 7).toString());
+					frame.getjTEstadoCivil().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 8).toString());
+					frame.getjTEmail().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 9).toString());
+					frame.getjTEndereco().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 10).toString());
+					frame.getjTBairro().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 11).toString());
+					frame.getjTCep().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 12).toString());
+					frame.getjTEstado().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 13).toString());
+					frame.getjTCidade().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 14).toString());
 					dispose();
 				}
 			}

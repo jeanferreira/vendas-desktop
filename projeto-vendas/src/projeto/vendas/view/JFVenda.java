@@ -23,11 +23,13 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JTable;
 import javax.swing.JSeparator;
+
 import java.awt.Toolkit;
 
 public class JFVenda extends JFrame {
@@ -72,10 +74,9 @@ public class JFVenda extends JFrame {
 	private JTextField jTEmail;
 	private JLabel jLEndereco;
 	private JTextField jTEndereco;
-	private JLabel lblBairro;
+	private JLabel jLBairro;
 	private JTextField jTBairro;
 	private JLabel jLCep;
-	private JTextField jTCep;
 	private JLabel jLEstado;
 	private JLabel jLCidade;
 	private JTextField jTCidade;
@@ -92,12 +93,21 @@ public class JFVenda extends JFrame {
 	private JFormattedTextField jTTotal;
 	private JButton jBFinalizarVenda;
 	private JTable jTableProduto;
+	private JFormattedTextField jTCep;
 
-	public JFVenda() {
+	public JFVenda() throws ParseException {
 		initComponents();
 		desabilitaDados();
 	}
 
+	public JFormattedTextField getjTCep() {
+		return jTCep;
+	}
+
+	public void setjTCep(JFormattedTextField jTCep) {
+		this.jTCep = jTCep;
+	}
+	
 	public JFormattedTextField getjTCpf() {
 		return jTCpf;
 	}
@@ -194,13 +204,6 @@ public class JFVenda extends JFrame {
 		this.jTBairro = jTBairro;
 	}
 
-	public JTextField getjTCep() {
-		return jTCep;
-	}
-
-	public void setjTCep(JTextField jTCep) {
-		this.jTCep = jTCep;
-	}
 
 	public JTextField getjTCidade() {
 		return jTCidade;
@@ -234,14 +237,14 @@ public class JFVenda extends JFrame {
 		this.jTDataVenda = jTDataVenda;
 	}
 
-	public static synchronized JFVenda getInstance() {
+	public static synchronized JFVenda getInstance() throws ParseException {
 		if (INSTANCIA_VENDA == null) {
 			INSTANCIA_VENDA = new JFVenda();
 		}
 		return INSTANCIA_VENDA;
 	}
 
-	private void initComponents() {
+	private void initComponents() throws ParseException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				JFVenda.class
 						.getResource("/projeto/vendas/images/cer_btn12.png")));
@@ -484,6 +487,8 @@ public class JFVenda extends JFrame {
 		jLCpf = new JLabel("CPF:");
 
 		jTCpf = new JFormattedTextField();
+		jTCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
+				new javax.swing.text.MaskFormatter("###.###.###-##")));
 
 		jBBuscarCliente = new JButton("Buscar");
 		jBBuscarCliente.addActionListener(new ActionListener() {
@@ -492,7 +497,7 @@ public class JFVenda extends JFrame {
 					try {
 						jfbuscacliente = new JFBuscaCliente(getInstance());
 						jfbuscacliente.show();
-					} catch (SQLException ex) {
+					} catch (SQLException | ParseException ex) {
 						Logger.getLogger(JFProduto.class.getName()).log(
 								Level.SEVERE, null, ex.getMessage());
 						JOptionPane.showMessageDialog(null, ex);
@@ -555,15 +560,12 @@ public class JFVenda extends JFrame {
 		jTEndereco = new JTextField();
 		jTEndereco.setColumns(10);
 
-		lblBairro = new JLabel("Bairro:");
+		jLBairro = new JLabel("Bairro:");
 
 		jTBairro = new JTextField();
 		jTBairro.setColumns(10);
 
 		jLCep = new JLabel("Cep:");
-
-		jTCep = new JTextField();
-		jTCep.setColumns(10);
 
 		jLEstado = new JLabel("Estado:");
 
@@ -574,344 +576,134 @@ public class JFVenda extends JFrame {
 
 		jTEstado = new JTextField();
 		jTEstado.setColumns(10);
+		
+		jTCep = new JFormattedTextField();
+		jTCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
+				new javax.swing.text.MaskFormatter("##.###-###")));
 
 		GroupLayout gl_jPDadosCliente = new GroupLayout(jPDadosCliente);
-		gl_jPDadosCliente
-				.setHorizontalGroup(gl_jPDadosCliente
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_jPDadosCliente
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_jPDadosCliente
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_jPDadosCliente
-																		.createSequentialGroup()
-																		.addComponent(
-																				jLCpf)
-																		.addGap(62)
-																		.addComponent(
-																				jTCpf,
-																				GroupLayout.DEFAULT_SIZE,
-																				196,
-																				Short.MAX_VALUE)
-																		.addGap(18)
-																		.addComponent(
-																				jBBuscarCliente)
-																		.addGap(307))
-														.addGroup(
-																gl_jPDadosCliente
-																		.createSequentialGroup()
-																		.addGroup(
-																				gl_jPDadosCliente
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addGroup(
-																								gl_jPDadosCliente
-																										.createParallelGroup(
-																												Alignment.LEADING)
-																										.addGroup(
-																												gl_jPDadosCliente
-																														.createSequentialGroup()
-																														.addComponent(
-																																jLNomeCliente)
-																														.addGap(18)
-																														.addComponent(
-																																jTNomeCliente,
-																																GroupLayout.DEFAULT_SIZE,
-																																339,
-																																Short.MAX_VALUE))
-																										.addGroup(
-																												gl_jPDadosCliente
-																														.createSequentialGroup()
-																														.addGroup(
-																																gl_jPDadosCliente
-																																		.createParallelGroup(
-																																				Alignment.LEADING)
-																																		.addComponent(
-																																				jLNomeMae)
-																																		.addComponent(
-																																				jLNomePai))
-																														.addGap(31)
-																														.addGroup(
-																																gl_jPDadosCliente
-																																		.createParallelGroup(
-																																				Alignment.LEADING)
-																																		.addGroup(
-																																				gl_jPDadosCliente
-																																						.createSequentialGroup()
-																																						.addComponent(
-																																								jTSexo,
-																																								GroupLayout.PREFERRED_SIZE,
-																																								104,
-																																								GroupLayout.PREFERRED_SIZE)
-																																						.addGap(18)
-																																						.addComponent(
-																																								jLEstadoCivil)
-																																						.addGap(18)
-																																						.addComponent(
-																																								jTEstadoCivil,
-																																								GroupLayout.DEFAULT_SIZE,
-																																								140,
-																																								Short.MAX_VALUE))
-																																		.addComponent(
-																																				jTNomeMae,
-																																				GroupLayout.DEFAULT_SIZE,
-																																				339,
-																																				Short.MAX_VALUE)
-																																		.addComponent(
-																																				jTNomePai,
-																																				GroupLayout.DEFAULT_SIZE,
-																																				339,
-																																				Short.MAX_VALUE)
-																																		.addComponent(
-																																				jTEndereco,
-																																				GroupLayout.DEFAULT_SIZE,
-																																				339,
-																																				Short.MAX_VALUE)
-																																		.addGroup(
-																																				gl_jPDadosCliente
-																																						.createSequentialGroup()
-																																						.addComponent(
-																																								jTCep,
-																																								GroupLayout.PREFERRED_SIZE,
-																																								143,
-																																								GroupLayout.PREFERRED_SIZE)
-																																						.addGap(18)
-																																						.addComponent(
-																																								jLEstado)
-																																						.addGap(18)
-																																						.addComponent(
-																																								jTEstado,
-																																								GroupLayout.DEFAULT_SIZE,
-																																								141,
-																																								Short.MAX_VALUE))))
-																										.addGroup(
-																												gl_jPDadosCliente
-																														.createSequentialGroup()
-																														.addComponent(
-																																jLSexo)
-																														.addGap(378))
-																										.addGroup(
-																												gl_jPDadosCliente
-																														.createSequentialGroup()
-																														.addComponent(
-																																jLEndereco)
-																														.addGap(375)))
-																						.addGroup(
-																								gl_jPDadosCliente
-																										.createSequentialGroup()
-																										.addComponent(
-																												jLCep)
-																										.addGap(419)))
-																		.addGap(18)
-																		.addGroup(
-																				gl_jPDadosCliente
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								jLDataNasc)
-																						.addComponent(
-																								jLRg)
-																						.addComponent(
-																								jLTelefone)
-																						.addComponent(
-																								jLEmail)
-																						.addComponent(
-																								lblBairro)
-																						.addComponent(
-																								jLCidade))
-																		.addGap(18)
-																		.addGroup(
-																				gl_jPDadosCliente
-																						.createParallelGroup(
-																								Alignment.LEADING,
-																								false)
-																						.addComponent(
-																								jTCidade)
-																						.addComponent(
-																								jTEmail)
-																						.addComponent(
-																								jTTelefone)
-																						.addComponent(
-																								jTRg)
-																						.addComponent(
-																								jTDataNasc,
-																								GroupLayout.DEFAULT_SIZE,
-																								168,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								jTBairro))
-																		.addContainerGap()))));
-		gl_jPDadosCliente
-				.setVerticalGroup(gl_jPDadosCliente
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_jPDadosCliente
-										.createSequentialGroup()
-										.addGroup(
-												gl_jPDadosCliente
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addGroup(
-																gl_jPDadosCliente
-																		.createSequentialGroup()
-																		.addComponent(
-																				jTRg,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				gl_jPDadosCliente
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								jTDataNasc,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								jLDataNasc))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				jTTelefone,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_jPDadosCliente
-																		.createSequentialGroup()
-																		.addGroup(
-																				gl_jPDadosCliente
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								jLCpf)
-																						.addComponent(
-																								jTCpf,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								jBBuscarCliente))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				gl_jPDadosCliente
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								jLNomeCliente)
-																						.addComponent(
-																								jTNomeCliente,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								jLRg))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				gl_jPDadosCliente
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								jTNomeMae,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								jLNomeMae))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				gl_jPDadosCliente
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								jTNomePai,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								jLNomePai)
-																						.addComponent(
-																								jLTelefone))))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												gl_jPDadosCliente
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(jLSexo)
-														.addComponent(
-																jTSexo,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																jLEstadoCivil)
-														.addComponent(
-																jTEstadoCivil,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																jTEmail,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(jLEmail))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												gl_jPDadosCliente
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																jLEndereco)
-														.addComponent(
-																jTEndereco,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblBairro)
-														.addComponent(
-																jTBairro,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												gl_jPDadosCliente
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(jLCep)
-														.addComponent(
-																jTCep,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(jLCidade)
-														.addComponent(
-																jTCidade,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(jLEstado)
-														.addComponent(
-																jTEstado,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(18, Short.MAX_VALUE)));
+		gl_jPDadosCliente.setHorizontalGroup(
+			gl_jPDadosCliente.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jPDadosCliente.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_jPDadosCliente.createSequentialGroup()
+							.addComponent(jLCpf)
+							.addGap(62)
+							.addComponent(jTCpf, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(jBBuscarCliente)
+							.addGap(307))
+						.addGroup(gl_jPDadosCliente.createSequentialGroup()
+							.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.LEADING)
+									.addGroup(gl_jPDadosCliente.createSequentialGroup()
+										.addComponent(jLNomeCliente)
+										.addGap(18)
+										.addComponent(jTNomeCliente, GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE))
+									.addGroup(gl_jPDadosCliente.createSequentialGroup()
+										.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.LEADING)
+											.addComponent(jLNomeMae)
+											.addComponent(jLNomePai))
+										.addGap(31)
+										.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.LEADING)
+											.addGroup(gl_jPDadosCliente.createSequentialGroup()
+												.addComponent(jTSexo, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
+												.addGap(18)
+												.addComponent(jLEstadoCivil)
+												.addGap(18)
+												.addComponent(jTEstadoCivil, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+											.addComponent(jTNomeMae, GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+											.addComponent(jTNomePai, GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+											.addComponent(jTEndereco, GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+											.addGroup(gl_jPDadosCliente.createSequentialGroup()
+												.addComponent(jTCep, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+												.addGap(18)
+												.addComponent(jLEstado)
+												.addGap(18)
+												.addComponent(jTEstado, GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))))
+									.addGroup(gl_jPDadosCliente.createSequentialGroup()
+										.addComponent(jLSexo)
+										.addGap(378))
+									.addGroup(gl_jPDadosCliente.createSequentialGroup()
+										.addComponent(jLEndereco)
+										.addGap(375)))
+								.addGroup(gl_jPDadosCliente.createSequentialGroup()
+									.addComponent(jLCep)
+									.addGap(419)))
+							.addGap(18)
+							.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.LEADING)
+								.addComponent(jLDataNasc)
+								.addComponent(jLRg)
+								.addComponent(jLTelefone)
+								.addComponent(jLEmail)
+								.addComponent(jLBairro)
+								.addComponent(jLCidade))
+							.addGap(18)
+							.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(jTCidade)
+								.addComponent(jTEmail)
+								.addComponent(jTTelefone)
+								.addComponent(jTRg)
+								.addComponent(jTDataNasc, GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+								.addComponent(jTBairro))
+							.addContainerGap())))
+		);
+		gl_jPDadosCliente.setVerticalGroup(
+			gl_jPDadosCliente.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jPDadosCliente.createSequentialGroup()
+					.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_jPDadosCliente.createSequentialGroup()
+							.addComponent(jTRg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jTDataNasc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLDataNasc))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jTTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_jPDadosCliente.createSequentialGroup()
+							.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jLCpf)
+								.addComponent(jTCpf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jBBuscarCliente))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jLNomeCliente)
+								.addComponent(jTNomeCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLRg))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jTNomeMae, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLNomeMae))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jTNomePai, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLNomePai)
+								.addComponent(jLTelefone))))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jLSexo)
+						.addComponent(jTSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLEstadoCivil)
+						.addComponent(jTEstadoCivil, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jTEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLEmail))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jLEndereco)
+						.addComponent(jTEndereco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLBairro)
+						.addComponent(jTBairro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_jPDadosCliente.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jLCep)
+						.addComponent(jLCidade)
+						.addComponent(jTCidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLEstado)
+						.addComponent(jTEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jTCep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 		jPDadosCliente.setLayout(gl_jPDadosCliente);
 		jPVenda.setLayout(gl_jPVenda);
 		jPContentVenda.setLayout(gl_jPContentVenda);
@@ -933,10 +725,10 @@ public class JFVenda extends JFrame {
 		jTEmail.setEnabled(false);
 		jTEndereco.setEnabled(false);
 		jTBairro.setEnabled(false);
-		jTCep.setEnabled(false);
 		jTEstado.setEnabled(false);
 		jTCidade.setEnabled(false);
 		jTCodProduto.setEnabled(false);
+		jTCep.setEnabled(false);
 	}
 
 	public static void main(String[] args) {

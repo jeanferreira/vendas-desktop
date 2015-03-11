@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.Toolkit;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.TitledBorder;
@@ -163,7 +164,13 @@ public class JFHome extends JFrame {
 		jMenuItemVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (jfvenda == null) {
-					jfvenda = new JFVenda();
+					try {
+						jfvenda = new JFVenda();
+					} catch (ParseException ex) {
+						Logger.getLogger(JFCustomer.class.getName()).log(
+								Level.SEVERE, null, ex.getMessage());
+						JOptionPane.showMessageDialog(null, ex);
+					}
 					jfvenda.show();
 				}else {
 					jfvenda.setVisible(true);
