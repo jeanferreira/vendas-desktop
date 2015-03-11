@@ -46,6 +46,7 @@ import projeto.vendas.model.Customer;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
 import java.awt.Toolkit;
 
 public class JFCustomer extends JFrame {
@@ -54,16 +55,16 @@ public class JFCustomer extends JFrame {
 	 * 
 	 */
 	private static JFCustomer INSTANCIA_CUSTOMER;
-	
-	
+
 	private static final long serialVersionUID = 2393976050363117949L;
 	private JPanel jPContentCustomer;
 	private final CustomerDAO controlCus;
 	List<Customer> lsCliente;
 	Customer customer;
-	DefaultTableModel tmCliente = new DefaultTableModel(null, new String[] {
-			"CPF", "NOME", "EMAIL", "TEL", "ENDEREÇO", "CEP", "BAIRRO",
-			"ESTADO", "CIDADE" }) {
+	
+	DefaultTableModel tmCliente = new DefaultTableModel(null,
+			new String[] { "CPF", "NOME CLIENTE", "RG", "NOME MÃE", "DATA NASC", "NOME PAI",
+					"TELEFONE", "SEXO", "ESTADO CIVIL", "EMAIL", "ENDEREÇO", "BAIRRO", "CEP", "ESTADO", "CIDADE" }) {
 		@Override
 		public boolean isCellEditable(int row, int col) {
 			return false;
@@ -115,16 +116,19 @@ public class JFCustomer extends JFrame {
 
 	/**
 	 * Launch the application.
-	 * @throws ParseException 
-	 * @throws SQLException 
+	 * 
+	 * @throws ParseException
+	 * @throws SQLException
 	 */
-	
-	public static synchronized JFCustomer getInstance() throws SQLException, ParseException {
+
+	public static synchronized JFCustomer getInstance() throws SQLException,
+			ParseException {
 		if (INSTANCIA_CUSTOMER == null) {
 			INSTANCIA_CUSTOMER = new JFCustomer();
 		}
 		return INSTANCIA_CUSTOMER;
 	}
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -145,7 +149,9 @@ public class JFCustomer extends JFrame {
 	 * @throws ParseException
 	 */
 	public JFCustomer() throws SQLException, ParseException {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(JFCustomer.class.getResource("/projeto/vendas/images/cer_btn12.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				JFCustomer.class
+						.getResource("/projeto/vendas/images/cer_btn12.png")));
 		initComponents();
 		desabilitaDados();
 		this.controlCus = new CustomerDAO();
@@ -263,7 +269,9 @@ public class JFCustomer extends JFrame {
 		jTEmail.setColumns(10);
 
 		jFormattedCep = new JFormattedTextField();
-		jFormattedCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###-###")));
+		jFormattedCep
+				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
+						new javax.swing.text.MaskFormatter("##.###-###")));
 
 		jLCep = new JLabel("CEP:");
 
@@ -287,115 +295,301 @@ public class JFCustomer extends JFrame {
 
 		jTBairro = new JTextField();
 		jTBairro.setColumns(10);
-		
+
 		jLEndereco = new JLabel("Endere\u00E7o:");
-		
+
 		jLTelefone = new JLabel("Telefone:");
 
 		GroupLayout gl_jPDados = new GroupLayout(jPDados);
-		gl_jPDados.setHorizontalGroup(
-			gl_jPDados.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_jPDados.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING, false)
-							.addGroup(gl_jPDados.createSequentialGroup()
-								.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
-									.addComponent(jLCpf)
-									.addComponent(jLRg))
-								.addGap(40)
-								.addGroup(gl_jPDados.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(jFormattedCpf)
-									.addComponent(jTRg, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
-							.addGroup(gl_jPDados.createSequentialGroup()
-								.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
-									.addComponent(jLDataNasc)
-									.addComponent(jLSexo)
-									.addComponent(jLTelefone))
-								.addGap(8)
-								.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
-									.addComponent(jCBSexo, 0, 140, Short.MAX_VALUE)
-									.addComponent(jFormattedDataNasc)
-									.addComponent(jFormattedCep, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-									.addComponent(jCBEstado, 0, 140, Short.MAX_VALUE)
-									.addComponent(jTTelefone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))))
-						.addComponent(jLCep)
-						.addComponent(jLEstado))
-					.addGap(18)
-					.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
-						.addComponent(jLNomeCliente)
-						.addComponent(jLNomeMae)
-						.addComponent(jLNomePai)
-						.addComponent(jLEstadoCivil)
-						.addComponent(jLCidade)
-						.addComponent(jLBairro)
-						.addComponent(jLEndereco))
-					.addGap(18)
-					.addGroup(gl_jPDados.createParallelGroup(Alignment.LEADING)
-						.addComponent(jTNomeMae, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
-						.addComponent(jTNomeCliente, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
-						.addComponent(jTNomePai, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
-						.addGroup(gl_jPDados.createSequentialGroup()
-							.addComponent(jCBEstadoCivil, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(jLEmail)
-							.addGap(18)
-							.addComponent(jTEmail, GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE))
-						.addComponent(jTEndereco, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
-						.addComponent(jCBCidade, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jTBairro, GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_jPDados.setVerticalGroup(
-			gl_jPDados.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_jPDados.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jLCpf)
-						.addComponent(jFormattedCpf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLNomeCliente)
-						.addComponent(jTNomeCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jLRg)
-						.addComponent(jTRg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLNomeMae)
-						.addComponent(jTNomeMae, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jFormattedDataNasc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLDataNasc)
-						.addComponent(jLNomePai)
-						.addComponent(jTNomePai, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jLSexo)
-						.addComponent(jCBSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLEstadoCivil)
-						.addComponent(jCBEstadoCivil, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLEmail)
-						.addComponent(jTEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jFormattedCep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLCep)
-						.addComponent(jTEndereco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLEndereco))
-					.addGap(18)
-					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jLEstado)
-						.addComponent(jCBEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLCidade)
-						.addComponent(jCBCidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_jPDados.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jLEstado)
-						.addComponent(jTTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLBairro)
-						.addComponent(jTBairro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jLTelefone))
-					.addContainerGap(15, Short.MAX_VALUE))
-		);
+		gl_jPDados
+				.setHorizontalGroup(gl_jPDados
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_jPDados
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_jPDados
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_jPDados
+																		.createParallelGroup(
+																				Alignment.LEADING,
+																				false)
+																		.addGroup(
+																				gl_jPDados
+																						.createSequentialGroup()
+																						.addGroup(
+																								gl_jPDados
+																										.createParallelGroup(
+																												Alignment.LEADING)
+																										.addComponent(
+																												jLCpf)
+																										.addComponent(
+																												jLRg))
+																						.addGap(40)
+																						.addGroup(
+																								gl_jPDados
+																										.createParallelGroup(
+																												Alignment.TRAILING,
+																												false)
+																										.addComponent(
+																												jFormattedCpf)
+																										.addComponent(
+																												jTRg,
+																												GroupLayout.DEFAULT_SIZE,
+																												140,
+																												Short.MAX_VALUE)))
+																		.addGroup(
+																				gl_jPDados
+																						.createSequentialGroup()
+																						.addGroup(
+																								gl_jPDados
+																										.createParallelGroup(
+																												Alignment.LEADING)
+																										.addComponent(
+																												jLDataNasc)
+																										.addComponent(
+																												jLSexo)
+																										.addComponent(
+																												jLTelefone))
+																						.addGap(8)
+																						.addGroup(
+																								gl_jPDados
+																										.createParallelGroup(
+																												Alignment.LEADING)
+																										.addComponent(
+																												jCBSexo,
+																												0,
+																												140,
+																												Short.MAX_VALUE)
+																										.addComponent(
+																												jFormattedDataNasc)
+																										.addComponent(
+																												jFormattedCep,
+																												GroupLayout.DEFAULT_SIZE,
+																												140,
+																												Short.MAX_VALUE)
+																										.addComponent(
+																												jCBEstado,
+																												0,
+																												140,
+																												Short.MAX_VALUE)
+																										.addComponent(
+																												jTTelefone,
+																												Alignment.TRAILING,
+																												GroupLayout.DEFAULT_SIZE,
+																												140,
+																												Short.MAX_VALUE))))
+														.addComponent(jLCep)
+														.addComponent(jLEstado))
+										.addGap(18)
+										.addGroup(
+												gl_jPDados
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addComponent(
+																jLNomeCliente)
+														.addComponent(jLNomeMae)
+														.addComponent(jLNomePai)
+														.addComponent(
+																jLEstadoCivil)
+														.addComponent(jLCidade)
+														.addComponent(jLBairro)
+														.addComponent(
+																jLEndereco))
+										.addGap(18)
+										.addGroup(
+												gl_jPDados
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addComponent(
+																jTNomeMae,
+																GroupLayout.DEFAULT_SIZE,
+																559,
+																Short.MAX_VALUE)
+														.addComponent(
+																jTNomeCliente,
+																GroupLayout.DEFAULT_SIZE,
+																559,
+																Short.MAX_VALUE)
+														.addComponent(
+																jTNomePai,
+																GroupLayout.DEFAULT_SIZE,
+																559,
+																Short.MAX_VALUE)
+														.addGroup(
+																gl_jPDados
+																		.createSequentialGroup()
+																		.addComponent(
+																				jCBEstadoCivil,
+																				GroupLayout.PREFERRED_SIZE,
+																				150,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(18)
+																		.addComponent(
+																				jLEmail)
+																		.addGap(18)
+																		.addComponent(
+																				jTEmail,
+																				GroupLayout.DEFAULT_SIZE,
+																				345,
+																				Short.MAX_VALUE))
+														.addComponent(
+																jTEndereco,
+																GroupLayout.DEFAULT_SIZE,
+																559,
+																Short.MAX_VALUE)
+														.addComponent(
+																jCBCidade,
+																GroupLayout.PREFERRED_SIZE,
+																220,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jTBairro,
+																GroupLayout.DEFAULT_SIZE,
+																559,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		gl_jPDados
+				.setVerticalGroup(gl_jPDados
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_jPDados
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_jPDados
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(jLCpf)
+														.addComponent(
+																jFormattedCpf,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jLNomeCliente)
+														.addComponent(
+																jTNomeCliente,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(18)
+										.addGroup(
+												gl_jPDados
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(jLRg)
+														.addComponent(
+																jTRg,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLNomeMae)
+														.addComponent(
+																jTNomeMae,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(18)
+										.addGroup(
+												gl_jPDados
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																jFormattedDataNasc,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jLDataNasc)
+														.addComponent(jLNomePai)
+														.addComponent(
+																jTNomePai,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(18)
+										.addGroup(
+												gl_jPDados
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(jLSexo)
+														.addComponent(
+																jCBSexo,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jLEstadoCivil)
+														.addComponent(
+																jCBEstadoCivil,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLEmail)
+														.addComponent(
+																jTEmail,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(18)
+										.addGroup(
+												gl_jPDados
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																jFormattedCep,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLCep)
+														.addComponent(
+																jTEndereco,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jLEndereco))
+										.addGap(18)
+										.addGroup(
+												gl_jPDados
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(jLEstado)
+														.addComponent(
+																jCBEstado,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLCidade)
+														.addComponent(
+																jCBCidade,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(18)
+										.addGroup(
+												gl_jPDados
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(jLEstado)
+														.addComponent(
+																jTTelefone,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLBairro)
+														.addComponent(
+																jTBairro,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jLTelefone))
+										.addContainerGap(15, Short.MAX_VALUE)));
 		jPDados.setLayout(gl_jPDados);
 
 		jBNovo = new JButton("Novo");
@@ -415,8 +609,9 @@ public class JFCustomer extends JFrame {
 					limparDados();
 					desabilitaDados();
 				} catch (SQLException | ParseException ex) {
-					Logger.getLogger(JFCustomer.class.getName()).log(Level.SEVERE, null, ex.getMessage());
-		            JOptionPane.showMessageDialog(null, ex);
+					Logger.getLogger(JFCustomer.class.getName()).log(
+							Level.SEVERE, null, ex.getMessage());
+					JOptionPane.showMessageDialog(null, ex);
 				}
 			}
 		});
@@ -611,50 +806,55 @@ public class JFCustomer extends JFrame {
 	public void arrumaTabela() {
 		jTableCliente.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		jTableCliente.getColumnModel().getColumn(0).setPreferredWidth(85);
-		jTableCliente.getColumnModel().getColumn(1).setPreferredWidth(220);
-		jTableCliente.getColumnModel().getColumn(2).setPreferredWidth(140);
-		jTableCliente.getColumnModel().getColumn(3).setPreferredWidth(80);
-		jTableCliente.getColumnModel().getColumn(4).setPreferredWidth(220);
-		jTableCliente.getColumnModel().getColumn(5).setPreferredWidth(60);
-		jTableCliente.getColumnModel().getColumn(6).setPreferredWidth(100);
-		jTableCliente.getColumnModel().getColumn(7).setPreferredWidth(50);
-		jTableCliente.getColumnModel().getColumn(8).setPreferredWidth(60);
+		jTableCliente.getColumnModel().getColumn(1).setPreferredWidth(230);
+		jTableCliente.getColumnModel().getColumn(2).setPreferredWidth(70);
+		jTableCliente.getColumnModel().getColumn(3).setPreferredWidth(230);
+		jTableCliente.getColumnModel().getColumn(4).setPreferredWidth(70);
+		jTableCliente.getColumnModel().getColumn(5).setPreferredWidth(200);
+		jTableCliente.getColumnModel().getColumn(6).setPreferredWidth(80);
+		jTableCliente.getColumnModel().getColumn(7).setPreferredWidth(70);
+		jTableCliente.getColumnModel().getColumn(9).setPreferredWidth(160);
+		jTableCliente.getColumnModel().getColumn(10).setPreferredWidth(200);
+		jTableCliente.getColumnModel().getColumn(11).setPreferredWidth(150);
+		jTableCliente.getColumnModel().getColumn(12).setPreferredWidth(70);
+		jTableCliente.getColumnModel().getColumn(13).setPreferredWidth(70);
+		jTableCliente.getColumnModel().getColumn(14).setPreferredWidth(70);
 	}
 
 	public final void desabilitaDados() {
-		jFormattedCpf.setEditable(false);
-		jTNomeCliente.setEditable(false);
-		jTEmail.setEditable(false);
-		jTTelefone.setEditable(false);
-		jTEndereco.setEditable(false);
-		jFormattedCep.setEditable(false);
-		jTBairro.setEditable(false);
-		jCBEstado.setEditable(false);
-		jCBCidade.setEditable(false);
-		jTNomePai.setEditable(false);
-		jTNomeMae.setEditable(false);
-		jCBSexo.setEditable(false);
-		jCBEstadoCivil.setEditable(false);
-		jTRg.setEditable(false);
-		jFormattedDataNasc.setEditable(false);
+		jFormattedCpf.setEnabled(false);
+		jTNomeCliente.setEnabled(false);
+		jTEmail.setEnabled(false);
+		jTTelefone.setEnabled(false);
+		jTEndereco.setEnabled(false);
+		jFormattedCep.setEnabled(false);
+		jTBairro.setEnabled(false);
+		jCBEstado.setEnabled(false);
+		jCBCidade.setEnabled(false);
+		jTNomePai.setEnabled(false);
+		jTNomeMae.setEnabled(false);
+		jCBSexo.setEnabled(false);
+		jCBEstadoCivil.setEnabled(false);
+		jTRg.setEnabled(false);
+		jFormattedDataNasc.setEnabled(false);
 	}
 
 	public final void habilitaDados() {
-		jFormattedCpf.setEditable(true);
-		jTNomeCliente.setEditable(true);
-		jTEmail.setEditable(true);
-		jTTelefone.setEditable(true);
-		jTEndereco.setEditable(true);
-		jFormattedCep.setEditable(true);
-		jTBairro.setEditable(true);
-		jCBEstado.setEditable(true);
-		jCBCidade.setEditable(true);
-		jTNomePai.setEditable(true);
-		jTNomeMae.setEditable(true);
-		jCBSexo.setEditable(true);
-		jCBEstadoCivil.setEditable(true);
-		jTRg.setEditable(true);
-		jFormattedDataNasc.setEditable(true);
+		jFormattedCpf.setEnabled(true);
+		jTNomeCliente.setEnabled(true);
+		jTEmail.setEnabled(true);
+		jTTelefone.setEnabled(true);
+		jTEndereco.setEnabled(true);
+		jFormattedCep.setEnabled(true);
+		jTBairro.setEnabled(true);
+		jCBEstado.setEnabled(true);
+		jCBCidade.setEnabled(true);
+		jTNomePai.setEnabled(true);
+		jTNomeMae.setEnabled(true);
+		jCBSexo.setEnabled(true);
+		jCBEstadoCivil.setEnabled(true);
+		jTRg.setEnabled(true);
+		jFormattedDataNasc.setEnabled(true);
 	}
 
 	public void limparDados() {
@@ -676,13 +876,15 @@ public class JFCustomer extends JFrame {
 	}
 
 	public boolean verificaDados() {
-		if (jFormattedCpf.getText().equals("") || jTNomeCliente.getText().equals("")
+		if (jFormattedCpf.getText().equals("")
+				|| jTNomeCliente.getText().equals("")
 				|| jTRg.getText().equals("") || jTNomeMae.getText().equals("")
 				|| jFormattedDataNasc.getText().equals("")
 				|| jTNomePai.getText().equals("")
 				|| jCBSexo.getSelectedItem().toString().equals("")
 				|| jCBEstadoCivil.getSelectedItem().toString().equals("")
-				|| jTEmail.getText().equals("") || jFormattedCep.getText().equals("")
+				|| jTEmail.getText().equals("")
+				|| jFormattedCep.getText().equals("")
 				|| jTEndereco.getText().equals("")
 				|| jCBEstado.getSelectedItem().toString().equals("")
 				|| jCBCidade.getSelectedItem().toString().equals("")
@@ -735,18 +937,17 @@ public class JFCustomer extends JFrame {
 
 	public void salvarCliente() throws SQLException, ParseException {
 
-		customer = new Customer(Long.parseLong(jFormattedCpf.getText().replace(".", "")
-				.replace("-", "")),
-				jCBEstadoCivil.getSelectedItem().toString(), jCBSexo
-						.getSelectedItem().toString(), jTNomeCliente.getText()
-						.toUpperCase(), jTRg.getText(),
-				customer.convertToDate(jFormattedDataNasc.getText()), jTEndereco
-						.getText().toUpperCase(), Long.parseLong(jFormattedCep
-						.getText().replace(".", "").replace("-", "")),
-				jTNomeMae.getText().toUpperCase(), jTNomePai.getText()
-						.toUpperCase(), Long.parseLong(jTTelefone.getText()),
-				jCBEstado.getSelectedItem().toString(), jCBCidade
-						.getSelectedItem().toString(), jTEmail.getText()
+		customer = new Customer(Long.parseLong(jFormattedCpf.getText()
+				.replace(".", "").replace("-", "")), jCBEstadoCivil
+				.getSelectedItem().toString(), jCBSexo.getSelectedItem()
+				.toString(), jTNomeCliente.getText().toUpperCase(),
+				jTRg.getText(), customer.convertToDate(jFormattedDataNasc
+						.getText()), jTEndereco.getText().toUpperCase(),
+				Long.parseLong(jFormattedCep.getText().replace(".", "")
+						.replace("-", "")), jTNomeMae.getText().toUpperCase(),
+				jTNomePai.getText().toUpperCase(), Long.parseLong(jTTelefone
+						.getText()), jCBEstado.getSelectedItem().toString(),
+				jCBCidade.getSelectedItem().toString(), jTEmail.getText()
 						.toUpperCase(), jTBairro.getText().toUpperCase());
 
 		controlCus.cadastrarCliente(customer);
@@ -769,18 +970,26 @@ public class JFCustomer extends JFrame {
 			JOptionPane.showMessageDialog(this, "Nenhum resultado obtido");
 		} else {
 			String[] linha = new String[] { null, null, null, null, null, null,
-					null, null, null };
+					null, null, null, null, null, null, null, null, null };
 			for (int i = 0; i < clientes.size(); i++) {
 				tmCliente.addRow(linha);
 				tmCliente.setValueAt(clientes.get(i).getCpf(), i, 0);
-				tmCliente.setValueAt(clientes.get(i).getNome_cliente(), i, 1);
-				tmCliente.setValueAt(clientes.get(i).getEmail(), i, 2);
-				tmCliente.setValueAt(clientes.get(i).getTelefone(), i, 3);
-				tmCliente.setValueAt(clientes.get(i).getEndereco(), i, 4);
-				tmCliente.setValueAt(clientes.get(i).getCep(), i, 5);
-				tmCliente.setValueAt(clientes.get(i).getBairro(), i, 6);
-				tmCliente.setValueAt(clientes.get(i).getEstado(), i, 7);
-				tmCliente.setValueAt(clientes.get(i).getCidade(), i, 8);
+				tmCliente.setValueAt(clientes.get(i).getNome_cliente(), i,
+						1);
+				tmCliente.setValueAt(clientes.get(i).getRg(), i, 2);
+				tmCliente.setValueAt(clientes.get(i).getNome_mae(), i, 3);
+				tmCliente.setValueAt(clientes.get(i).getDataNasc(), i, 4);
+				tmCliente.setValueAt(clientes.get(i).getNome_pai(), i, 5);
+				tmCliente.setValueAt(clientes.get(i).getTelefone(), i, 6);
+				tmCliente.setValueAt(clientes.get(i).getSexo(), i, 7);
+				tmCliente.setValueAt(clientes.get(i).getEstado_civil(), i,
+						8);
+				tmCliente.setValueAt(clientes.get(i).getEmail(), i, 9);
+				tmCliente.setValueAt(clientes.get(i).getEndereco(), i, 10);
+				tmCliente.setValueAt(clientes.get(i).getBairro(), i, 11);
+				tmCliente.setValueAt(clientes.get(i).getCep(), i, 12);
+				tmCliente.setValueAt(clientes.get(i).getEstado(), i, 13);
+				tmCliente.setValueAt(clientes.get(i).getCidade(), i, 14);
 			}
 		}
 	}

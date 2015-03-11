@@ -27,6 +27,8 @@ import projeto.vendas.model.Produto;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class JFBuscaProduto extends JFrame {
 
@@ -108,6 +110,14 @@ public class JFBuscaProduto extends JFrame {
 		jBPesquisar.setIcon(new ImageIcon(JFBuscaProduto.class.getResource("/projeto/vendas/images/1999_16x16.png")));
 		
 		jTableBuscaProduto = new JTable();
+		jTableBuscaProduto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					dispose();
+				}
+			}
+		});
 		jTableBuscaProduto.setModel(tmProduto);
 		
 		jScrollPaneProduto = new JScrollPane();

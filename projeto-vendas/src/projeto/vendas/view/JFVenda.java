@@ -97,7 +97,7 @@ public class JFVenda extends JFrame {
 		initComponents();
 		desabilitaDados();
 	}
-	
+
 	public JFormattedTextField getjTCpf() {
 		return jTCpf;
 	}
@@ -114,187 +114,125 @@ public class JFVenda extends JFrame {
 		this.jTNomeCliente = jTNomeCliente;
 	}
 
-
-
 	public JTextField getjTNomeMae() {
 		return jTNomeMae;
 	}
-
-
 
 	public void setjTNomeMae(JTextField jTNomeMae) {
 		this.jTNomeMae = jTNomeMae;
 	}
 
-
-
 	public JTextField getjTRg() {
 		return jTRg;
 	}
-
-
 
 	public void setjTRg(JTextField jTRg) {
 		this.jTRg = jTRg;
 	}
 
-
-
 	public JFormattedTextField getjTDataNasc() {
 		return jTDataNasc;
 	}
-
-
 
 	public void setjTDataNasc(JFormattedTextField jTDataNasc) {
 		this.jTDataNasc = jTDataNasc;
 	}
 
-
-
 	public JTextField getjTNomePai() {
 		return jTNomePai;
 	}
-
-
 
 	public void setjTNomePai(JTextField jTNomePai) {
 		this.jTNomePai = jTNomePai;
 	}
 
-
-
 	public JTextField getjTTelefone() {
 		return jTTelefone;
 	}
-
-
 
 	public void setjTTelefone(JTextField jTTelefone) {
 		this.jTTelefone = jTTelefone;
 	}
 
-
-
 	public JTextField getjTSexo() {
 		return jTSexo;
 	}
-
-
 
 	public void setjTSexo(JTextField jTSexo) {
 		this.jTSexo = jTSexo;
 	}
 
-
-
 	public JTextField getjTEstadoCivil() {
 		return jTEstadoCivil;
 	}
-
-
 
 	public void setjTEstadoCivil(JTextField jTEstadoCivil) {
 		this.jTEstadoCivil = jTEstadoCivil;
 	}
 
-
-
 	public JTextField getjTEmail() {
 		return jTEmail;
 	}
-
-
 
 	public void setjTEmail(JTextField jTEmail) {
 		this.jTEmail = jTEmail;
 	}
 
-
-
 	public JTextField getjTEndereco() {
 		return jTEndereco;
 	}
-
-
 
 	public void setjTEndereco(JTextField jTEndereco) {
 		this.jTEndereco = jTEndereco;
 	}
 
-
-
 	public JTextField getjTBairro() {
 		return jTBairro;
 	}
-
-
 
 	public void setjTBairro(JTextField jTBairro) {
 		this.jTBairro = jTBairro;
 	}
 
-
-
 	public JTextField getjTCep() {
 		return jTCep;
 	}
-
-
 
 	public void setjTCep(JTextField jTCep) {
 		this.jTCep = jTCep;
 	}
 
-
-
 	public JTextField getjTCidade() {
 		return jTCidade;
 	}
-
-
 
 	public void setjTCidade(JTextField jTCidade) {
 		this.jTCidade = jTCidade;
 	}
 
-
-
 	public JTextField getjTEstado() {
 		return jTEstado;
 	}
-
-
 
 	public void setjTEstado(JTextField jTEstado) {
 		this.jTEstado = jTEstado;
 	}
 
-
-
 	public JTextField getjTCodProduto() {
 		return jTCodProduto;
 	}
-
-
 
 	public void setjTCodProduto(JTextField jTCodProduto) {
 		this.jTCodProduto = jTCodProduto;
 	}
 
-
-
 	public JFormattedTextField getjTDataVenda() {
 		return jTDataVenda;
 	}
 
-
-
 	public void setjTDataVenda(JFormattedTextField jTDataVenda) {
 		this.jTDataVenda = jTDataVenda;
 	}
-
-
 
 	public static synchronized JFVenda getInstance() {
 		if (INSTANCIA_VENDA == null) {
@@ -983,22 +921,22 @@ public class JFVenda extends JFrame {
 	}
 
 	public void desabilitaDados() {
-		jTCpf.setEditable(false);
-		jTNomeCliente.setEditable(false);
-		jTRg.setEditable(false);
-		jTNomeMae.setEditable(false);
-		jTDataNasc.setEditable(false);
-		jTNomePai.setEditable(false);
-		jTTelefone.setEditable(false);
-		jTSexo.setEditable(false);
-		jTEstadoCivil.setEditable(false);
-		jTEmail.setEditable(false);
-		jTEndereco.setEditable(false);
-		jTBairro.setEditable(false);
-		jTCep.setEditable(false);
-		jTEstado.setEditable(false);
-		jTCidade.setEditable(false);
-		jTCodProduto.setEditable(false);
+		jTCpf.setEnabled(false);
+		jTNomeCliente.setEnabled(false);
+		jTRg.setEnabled(false);
+		jTNomeMae.setEnabled(false);
+		jTDataNasc.setEnabled(false);
+		jTNomePai.setEnabled(false);
+		jTTelefone.setEnabled(false);
+		jTSexo.setEnabled(false);
+		jTEstadoCivil.setEnabled(false);
+		jTEmail.setEnabled(false);
+		jTEndereco.setEnabled(false);
+		jTBairro.setEnabled(false);
+		jTCep.setEnabled(false);
+		jTEstado.setEnabled(false);
+		jTCidade.setEnabled(false);
+		jTCodProduto.setEnabled(false);
 	}
 
 	public static void main(String[] args) {

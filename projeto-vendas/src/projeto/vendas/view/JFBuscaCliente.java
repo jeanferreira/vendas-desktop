@@ -34,8 +34,8 @@ import java.awt.event.MouseEvent;
 public class JFBuscaCliente extends JFrame {
 	
 	DefaultTableModel tmBuscaCliente = new DefaultTableModel(null,
-			new String[] { "CPF", "NOME", "EMAIL", "TEL", "ENDEREÇO", "CEP",
-					"BAIRRO", "ESTADO", "CIDADE" }) {
+			new String[] { "CPF", "NOME CLIENTE", "RG", "NOME MÃE", "DATA NASC", "NOME PAI",
+					"TELEFONE", "SEXO", "ESTADO CIVIL", "EMAIL", "ENDEREÇO", "BAIRRO", "CEP", "ESTADO", "CIDADE" }) {
 		@Override
 		public boolean isCellEditable(int row, int col) {
 			return false;
@@ -116,20 +116,27 @@ public class JFBuscaCliente extends JFrame {
 		);
 
 		jTableBuscaCliente = new JTable();
+		jTableBuscaCliente.setModel(tmBuscaCliente);
+		arrumaTabela();
 		jTableBuscaCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					JFVenda frame = jfvenda;
-					frame.getjTCpf().setText(jTableBuscaCliente.getValueAt(jTableBuscaCliente.getSelectedRow(), 0).toString());
-					String x = jTableBuscaCliente.getValueAt(jTableBuscaCliente.getSelectedRow(), 0).toString();
-					System.out.println(x);
+					frame.getjTCpf().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 0).toString());
+					frame.getjTNomeCliente().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 1).toString());
+					frame.getjTEmail().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 2).toString());
+					frame.getjTTelefone().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 3).toString());
+					frame.getjTEndereco().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 4).toString());
+					frame.getjTCep().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 5).toString());
+					frame.getjTBairro().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 6).toString());
+					frame.getjTEstado().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 7).toString());
+					frame.getjTCidade().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 8).toString());
 					dispose();
 				}
 			}
 		});
-		jTableBuscaCliente.setModel(tmBuscaCliente);
-
+		
 		jScrollPaneCliente = new JScrollPane();
 		jScrollPaneCliente.setViewportView(jTableBuscaCliente);
 
@@ -182,21 +189,46 @@ public class JFBuscaCliente extends JFrame {
 			JOptionPane.showMessageDialog(this, "Nenhum resultado obtido");
 		} else {
 			String[] linha = new String[] { null, null, null, null, null, null,
-					null, null, null };
+					null, null, null, null, null, null, null, null, null};
 			for (int i = 0; i < clientes.size(); i++) {
 				tmBuscaCliente.addRow(linha);
 				tmBuscaCliente.setValueAt(clientes.get(i).getCpf(), i, 0);
 				tmBuscaCliente.setValueAt(clientes.get(i).getNome_cliente(), i,
 						1);
-				tmBuscaCliente.setValueAt(clientes.get(i).getEmail(), i, 2);
-				tmBuscaCliente.setValueAt(clientes.get(i).getTelefone(), i, 3);
-				tmBuscaCliente.setValueAt(clientes.get(i).getEndereco(), i, 4);
-				tmBuscaCliente.setValueAt(clientes.get(i).getCep(), i, 5);
-				tmBuscaCliente.setValueAt(clientes.get(i).getBairro(), i, 6);
-				tmBuscaCliente.setValueAt(clientes.get(i).getEstado(), i, 7);
-				tmBuscaCliente.setValueAt(clientes.get(i).getCidade(), i, 8);
+				tmBuscaCliente.setValueAt(clientes.get(i).getRg(), i, 2);
+				tmBuscaCliente.setValueAt(clientes.get(i).getNome_mae(), i, 3);
+				tmBuscaCliente.setValueAt(clientes.get(i).getDataNasc(), i, 4);
+				tmBuscaCliente.setValueAt(clientes.get(i).getNome_pai(), i, 5);
+				tmBuscaCliente.setValueAt(clientes.get(i).getTelefone(), i, 6);
+				tmBuscaCliente.setValueAt(clientes.get(i).getSexo(), i, 7);
+				tmBuscaCliente.setValueAt(clientes.get(i).getEstado_civil(), i, 8);
+				tmBuscaCliente.setValueAt(clientes.get(i).getEmail(), i, 9);
+				tmBuscaCliente.setValueAt(clientes.get(i).getEndereco(), i, 10);
+				tmBuscaCliente.setValueAt(clientes.get(i).getBairro(), i, 11);
+				tmBuscaCliente.setValueAt(clientes.get(i).getCep(), i, 12);
+				tmBuscaCliente.setValueAt(clientes.get(i).getEstado(), i, 13);
+				tmBuscaCliente.setValueAt(clientes.get(i).getCidade(), i, 14);
+				
 			}
 		}
+	}
+	
+	public void arrumaTabela() {
+		jTableBuscaCliente.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		jTableBuscaCliente.getColumnModel().getColumn(0).setPreferredWidth(85);
+		jTableBuscaCliente.getColumnModel().getColumn(1).setPreferredWidth(230);
+		jTableBuscaCliente.getColumnModel().getColumn(2).setPreferredWidth(70);
+		jTableBuscaCliente.getColumnModel().getColumn(3).setPreferredWidth(230);
+		jTableBuscaCliente.getColumnModel().getColumn(4).setPreferredWidth(70);
+		jTableBuscaCliente.getColumnModel().getColumn(5).setPreferredWidth(200);
+		jTableBuscaCliente.getColumnModel().getColumn(6).setPreferredWidth(80);
+		jTableBuscaCliente.getColumnModel().getColumn(7).setPreferredWidth(70);
+		jTableBuscaCliente.getColumnModel().getColumn(9).setPreferredWidth(160);
+		jTableBuscaCliente.getColumnModel().getColumn(10).setPreferredWidth(200);
+		jTableBuscaCliente.getColumnModel().getColumn(11).setPreferredWidth(150);
+		jTableBuscaCliente.getColumnModel().getColumn(12).setPreferredWidth(70);
+		jTableBuscaCliente.getColumnModel().getColumn(13).setPreferredWidth(70);
+		jTableBuscaCliente.getColumnModel().getColumn(14).setPreferredWidth(70);
 	}
 	
 	public static void main(String[] args) {
