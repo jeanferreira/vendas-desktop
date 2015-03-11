@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -31,6 +32,10 @@ import javax.swing.JTable;
 import javax.swing.JSeparator;
 
 import java.awt.Toolkit;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class JFVenda extends JFrame {
 
@@ -237,6 +242,22 @@ public class JFVenda extends JFrame {
 		this.jTDataVenda = jTDataVenda;
 	}
 
+	public JTable getjTableProduto() {
+		return jTableProduto;
+	}
+
+	public void setjTableProduto(JTable jTableProduto) {
+		this.jTableProduto = jTableProduto;
+	}
+	
+	public DefaultTableModel getTmProduto() {
+		return tmProduto;
+	}
+
+	public void setTmProduto(DefaultTableModel tmProduto) {
+		this.tmProduto = tmProduto;
+	}
+
 	public static synchronized JFVenda getInstance() throws ParseException {
 		if (INSTANCIA_VENDA == null) {
 			INSTANCIA_VENDA = new JFVenda();
@@ -295,6 +316,41 @@ public class JFVenda extends JFrame {
 		jTTotal = new JFormattedTextField();
 
 		jBFinalizarVenda = new JButton("Finalizar Venda");
+		jBFinalizarVenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser open = new JFileChooser();
+				if (arg0.getSource() == jBFinalizarVenda) {
+					int op = open.showSaveDialog(null);
+					if (op == JFileChooser.APPROVE_OPTION) {
+						File arq = open.getSelectedFile();
+						String path = arq.toString();
+						try {
+							BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+							bw.write("CPF" + ";" + jTCpf.getText() + "\n" + "NOME CLIENTE" + ";" + jTNomeCliente.getText() + "\n"
+									+ "RG" + ";" + jTRg.getText() + "\n"
+									+ "NOME MÃE" + ";" + jTNomeMae.getText() + "\n"
+									+ "DATA NASCIMENTO" + ";" + jTDataNasc.getText() + "\n"
+									+ "NOME PAI" + ";" + jTNomePai.getText() + "\n"
+									+ "TELEFONE" + ";" + jTTelefone.getText() + "\n"
+									+ "SEXO" + ";" + jTSexo.getText() + "\n"
+									+ "ESTADO CIVIL" + ";" + jTEstadoCivil.getText() + "\n"
+									+ "EMAIL" + ";" + jTEmail.getText() + "\n"
+									+ "ENDEREÇO" + ";" + jTEndereco.getText() + "\n"
+									+ "BAIRRO:" + ";" + jTBairro.getText() + "\n"
+									+ "CEP" + ";" + jTCep.getText() + "\n"
+									+ "ESTADO" + ";" + jTEstado.getText() + "\n"
+									+ "CIDADE" + ";" + jTCidade.getText());
+							bw.close();
+							JOptionPane.showMessageDialog(null, "Venda Gerada com Sucesso");
+						} catch (IOException ex) {
+							Logger.getLogger(JFProduto.class.getName()).log(
+									Level.SEVERE, null, ex.getMessage());
+							JOptionPane.showMessageDialog(null, ex);
+						}
+					}
+				}
+			}
+		});
 		jBFinalizarVenda
 				.setIcon(new ImageIcon(
 						JFVenda.class
@@ -404,8 +460,9 @@ public class JFVenda extends JFrame {
 				if (jfbuscaproduto == null) {
 					try {
 						jfbuscaproduto = new JFBuscaProduto();
-						jfbuscaproduto.show();
-					} catch (SQLException ex) {
+						jfbuscaproduto.setVisible(true);
+						jfbuscaproduto.populaProduto(getInstance());
+					} catch (SQLException | ParseException ex) {
 						Logger.getLogger(JFProduto.class.getName()).log(
 								Level.SEVERE, null, ex.getMessage());
 						JOptionPane.showMessageDialog(null, ex);
@@ -496,7 +553,8 @@ public class JFVenda extends JFrame {
 				if (jfbuscacliente == null) {
 					try {
 						jfbuscacliente = new JFBuscaCliente(getInstance());
-						jfbuscacliente.show();
+						jfbuscacliente.setVisible(true);
+						dispose();
 					} catch (SQLException | ParseException ex) {
 						Logger.getLogger(JFProduto.class.getName()).log(
 								Level.SEVERE, null, ex.getMessage());
@@ -505,6 +563,8 @@ public class JFVenda extends JFrame {
 
 				} else {
 					jfbuscacliente.setVisible(true);
+					dispose();
+					
 				}
 			}
 		});

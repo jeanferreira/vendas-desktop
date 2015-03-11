@@ -24,7 +24,6 @@ import projeto.vendas.model.Customer;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -139,6 +138,7 @@ public class JFBuscaCliente extends JFrame {
 					frame.getjTEstado().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 13).toString());
 					frame.getjTCidade().setText(jTableBuscaCliente.getModel().getValueAt(jTableBuscaCliente.getSelectedRow(), 14).toString());
 					dispose();
+					frame.setVisible(true);
 				}
 			}
 		});
